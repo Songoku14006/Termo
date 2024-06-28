@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termo</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body class="body">
+    <header class="header">
+        <button class="header-botao-regras" onclick="openRules()"><img class="header-imagem-regras" src="assets/regras.png" alt="Regras"></button>
+        <h1 class="header-titulo">Termo</h1>
+        <button class="header-botao-estatisticas" onclick="openEstatistics()"><img class="header-img-grafico" src="assets/grafico.png" alt="Estatísticas"></button>
+    </header>
+    <main class="main">
+        <div class="row" id="row-1">
+            <input class="main-input" id="main-input-1" type="text" autocomplete="off" maxlength="1">
+            <input class="main-input" id="main-input-2" type="text" autocomplete="off" maxlength="1">
+            <input class="main-input" id="main-input-3" type="text" autocomplete="off" maxlength="1">
+            <input class="main-input" id="main-input-4" type="text" autocomplete="off" maxlength="1">
+            <input class="main-input" id="main-input-5" type="text" autocomplete="off" maxlength="1">
+        </div>
+        <div class="row" id="row-2">
+            <input class="main-input" id="main-input-6" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-7" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-8" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-9" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-10" type="text" autocomplete="off" maxlength="1" disabled>
+        </div>
+        <div class="row" id="row-3">
+            <input class="main-input" id="main-input-11" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-12" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-13" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-14" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-15" type="text" autocomplete="off" maxlength="1" disabled>
+        </div>
+        <div class="row" id="row-4">
+            <input class="main-input" id="main-input-16" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-17" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-18" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-19" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-20" type="text" autocomplete="off" maxlength="1" disabled>
+        </div>
+        <div class="row" id="row-5">
+            <input class="main-input" id="main-input-21" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-22" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-23" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-24" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="main-input-25" type="text" autocomplete="off" maxlength="1" disabled>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="teclado-linha1">
+            <button class="footer-teclado" onclick="insertLetter('row-1', 'Q')">Q</button>
+            <button class="footer-teclado" onclick="insertLetter('row-1', 'W')">W</button>
+            <button class="footer-teclado" onclick="insertLetter('row-1', 'E')">E</button>
+            <button class="footer-teclado" onclick="insertLetter('row-1', 'R')">R</button>
+            <button class="footer-teclado" onclick="insertLetter('row-1', 'T')">T</button>
+            <button class="footer-teclado" onclick="insertLetter('row-1', 'Y')">Y</button>
+            <button class="footer-teclado" onclick="insertLetter('row-1', 'U')">U</button>
+            <button class="footer-teclado" onclick="insertLetter('row-1', 'I')">I</button>
+            <button class="footer-teclado" onclick="insertLetter('row-1', 'O')">O</button>
+            <button class="footer-teclado" onclick="insertLetter('row-1', 'P')">P</button>
+        </div>
+        <div class="teclado-linha2">
+            <div class="teclado-linha2-teclas">
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'A')">A</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'S')">S</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'D')">D</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'F')">F</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'G')">G</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'H')">H</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'J')">J</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'K')">K</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'L')">L</button>
+            </div>
+            <div class="div-backspace">
+                <button class="div-backspace-button" onclick="backspace()"><img class="div-backspace-image" src="assets/backspace.png" alt="backspace"></button>
+            </div>
+        </div>
+        <div class="teclado-linha3">
+            <div id="teclado-linha3-teclas">
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'Z')">Z</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'X')">X</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'C')">C</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'V')">V</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'B')">B</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'N')">N</button>
+                <button class="footer-teclado" onclick="insertLetter('row-1', 'M')">M</button>
+            </div>
+            <div class="div-enter">
+                <button class="div-enter-button" onclick="enter()">Enter</button>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
