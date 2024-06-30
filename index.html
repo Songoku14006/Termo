@@ -6,7 +6,7 @@
     <title>Termo</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" type="text/css" href="styles/styles.css">
-    <script type="module" src="js/app.js" defer></script>        
+    <script type="module" src="js/app.js" defer>import {insertLetter} from './app.js';</script>        
 </head>
 <body class="body">
     <header class="header">
@@ -53,28 +53,28 @@
     </main>
     <footer class="footer">
         <div class="teclado-linha1">
-            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'Q')">Q</button>
-            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'W')">W</button>
-            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'E')">E</button>
-            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'R')">R</button>
-            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'T')">T</button>
-            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'Y')">Y</button>
-            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'U')">U</button>
-            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'I')">I</button>
-            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'O')">O</button>
-            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'P')">P</button>
+            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('Q')">Q</button>
+            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('W')">W</button>
+            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('E')">E</button>
+            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('R')">R</button>
+            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('T')">T</button>
+            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('Y')">Y</button>
+            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('U')">U</button>
+            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('I')">I</button>
+            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('O')">O</button>
+            <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('P')">P</button>
         </div>
         <div class="teclado-linha2">
             <div class="teclado-linha2-teclas">
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'A')">A</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'S')">S</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'D')">D</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'F')">F</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'G')">G</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'H')">H</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'J')">J</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'K')">K</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'L')">L</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('A')">A</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('S')">S</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('D')">D</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('F')">F</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('G')">G</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('H')">H</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('J')">J</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('K')">K</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('L')">L</button>
             </div>
             <div class="div-backspace">
                 <button id="backspace" class="div-backspace-button" onclick="backspace()"><img class="div-backspace-image" src="assets/backspace.png" alt="backspace"></button>
@@ -82,13 +82,13 @@
         </div>
         <div class="teclado-linha3">
             <div id="teclado-linha3-teclas">
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'Z')">Z</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'X')">X</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'C')">C</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'V')">V</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'B')">B</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'N')">N</button>
-                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('row-1', 'M')">M</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('Z')">Z</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('X')">X</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('C')">C</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('V')">V</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('B')">B</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('N')">N</button>
+                <button id="footer-teclado" class="footer-teclado" onclick="insertLetter('M')">M</button>
             </div>
             <div class="div-enter">
                 <button id="enter" class="div-enter-button" onclick="enter()">Enter</button>
