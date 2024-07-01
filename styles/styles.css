@@ -38,16 +38,18 @@
     margin-right: 20%;
 }
 
-.header-botao-estatisticas {
+.header-botao-restart {
     height: 30px;
     width: 30px;
     border-radius: 100%;
     background-color: #6099B6;
+    justify-content: center;
 }
 
-.header-img-grafico {
-    height: 18px;
-    width: 18px;
+.header-img-restart {
+    height: 24px;
+    width: 24px;
+    align-items: center;
 }
 
 .main {
