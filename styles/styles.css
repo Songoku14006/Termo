@@ -72,6 +72,12 @@
     border-radius: 10%;
 }
 
+.main-input:focus {
+    outline: none;
+    padding: 1px;
+    caret-color: transparent;
+}
+
 .main-input:disabled {
     width: 50px;
     height: 50px;

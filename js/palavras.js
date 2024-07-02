@@ -81,5 +81,6 @@ export const palavras = [
     'viger', 'canil', 'forro', 'urgir', 'ousar', 'sigla', 'fugiu', 'reler', 'valer', 'gueto', 'diabo', 'sexto',
     'pagar', 'míope', 'bruxa', 'sabiá', 'xampu', 'fátuo', 'pluma', 'repor', 'corar', 'vário', 'tumba', 'bugre',
     'choça', 'custo', 'cardo', 'lento', 'hífen', 'mania', 'penca', 'versa', 'corte', 'modal', 'nesga', 'pular',
-    'sadio', 'rácio', 'ferir', 'sócio', 'sugar', 'voilà', 'harém', 'ceifa', 'digna', 'puído', 'pátio', 'cacto'
+    'sadio', 'rácio', 'ferir', 'sócio', 'sugar', 'voilà', 'harém', 'ceifa', 'digna', 'puído', 'pátio', 'cacto',
+    'farda', 'cesto', 'sarar', 'ponta', 'prove', 'carpa', 'cansa', 'brasa', 'focar'
 ];
