@@ -5,17 +5,28 @@ document.addEventListener("DOMContentLoaded", function() {
     let size = palavras.length;
     let selectedIndex = 1;    
     let selectInput = document.getElementById(`main-input-${selectedIndex}`);
-    selectInput.focus();   
+    selectInput.focus(); 
+    
+    document.addEventListener('focus', (event) => {
+        const focusedElement = document.activeElement;
+        const elementId = focusedElement.id;
+        const numberMatch = elementId.match(/\d+/);
+        if (numberMatch) {
+            const number = numberMatch[0];
+            selectedIndex = parseInt(number, 10);
+            console.log(selectedIndex);
+        }
+    }, true);
 
     function insertLetter(event) {
         const letter = event.target.textContent;
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
         
-        for (let i = 0; i < rowInputs.length; i++) {
-            if (rowInputs[i].value === "") {
-                rowInputs[i].value = letter;
-                rowInputs[i].focus();
-                break;
+        if (selectedIndex <= rowInputs.length) {
+            rowInputs[selectedIndex - 1].value = letter;
+            selectedIndex++;
+            if (selectedIndex > rowInputs.length) {
+                selectedIndex = rowInputs.length;
             }
         }
     }
@@ -25,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
         letra.addEventListener("click", insertLetter);
     });
 
-    document.addEventListener('DOMContentLoaded', getRandomWord());
+    getRandomWord();
     function getRandomWord() {
         let posicao = getRandomNumber(size);
         let fruit = palavras.at(posicao);
@@ -33,9 +44,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function getRandomNumber(size) {
-        let randomNumber = Math.random() * size-1;
+        let randomNumber = Math.floor(Math.random() * size);
         return randomNumber;
     }
+
     const backspace = document.querySelector(".div-backspace-button");
     if (backspace) {
         backspace.addEventListener("click", btnBackspace);
@@ -43,12 +55,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function btnBackspace() {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
+        if (selectedIndex > 1) {
+            selectedIndex--;
+        }
         for (let i = rowInputs.length - 1; i >= 0; i--) {
             if (rowInputs[i].value !== "") {
                 rowInputs[i].value = "";
-                rowInputs[selectedIndex].focus;
+                rowInputs[selectedIndex - 1].focus();
                 break;
             }
         }
     }
 });
+
