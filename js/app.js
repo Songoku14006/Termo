@@ -194,7 +194,12 @@ document.addEventListener("DOMContentLoaded", function() {
             rowInputs.forEach(input => input.style.backgroundColor = "#6AA84F");
             adicionarLetrasUsadas(palavraDigitada);
             atualizarCoresTeclas(palavraDigitada, Array(5).fill("Correto"), palavraSorteada);
+            mostrarTelaVitoria();
             return;
+        } else {
+            if (currentRow === 6) {
+                mostrarTelaDerrota(palavraSorteada);
+            }
         }
     
         const resultado = verificarResultado(palavraDigitada, palavraSorteada);
@@ -291,8 +296,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    function mostrarTelaDerrota() {
+    function mostrarTelaDerrota(palavraCorreta) {
+        const derrotaOverlayContent = document.querySelector(".derrota-overlay-content");
+        derrotaOverlayContent.innerHTML = `A palavra correta era: ${palavraCorreta}`;
         derrotaOverlay.classList.add("show");
+    
         derrotaOverlay.addEventListener("click", function() {
             derrotaOverlay.classList.remove("show");
         });
@@ -302,14 +310,14 @@ document.addEventListener("DOMContentLoaded", function() {
         palavraNaoEncontradaOverlay.classList.add("show");
         setTimeout(() => {
             palavraNaoEncontradaOverlay.classList.remove("show");
-        }, 3000); // Remove após 3 segundos (3000 milissegundos)
+        }, 1500);
     }
     
     function mostrarPalavraIncompleta() {
         palavraIncompletaOverlay.classList.add("show");
         setTimeout(() => {
             palavraIncompletaOverlay.classList.remove("show");
-        }, 3000); // Remove após 3 segundos (3000 milissegundos)
+        }, 1500);
     }
 
     function resetarPagina() {

@@ -57,6 +57,31 @@
     opacity: 1;
 }
 
+.derrota-overlay-content  {
+    font-size: 3rem;
+    font-family: 'Libre Baskerville', sans-serif;
+}
+
+.titulo-vitoria {
+    font-size: 4rem;
+    font-family: 'Libre Baskerville', sans-serif;
+}
+
+.texto-vitoria {
+    font-size: 2rem;
+    font-family: 'Libre Baskerville', sans-serif;
+}
+
+.titulo-derrota {
+    font-size: 5rem;
+    font-family: 'Libre Baskerville', sans-serif;
+}
+
+.texto-derrota {
+    font-size: 2rem;
+    font-family: 'Libre Baskerville', sans-serif;
+}
+
 .aviso-overlay {
     position: fixed;
     top: 0;
@@ -90,10 +115,6 @@
     font-size: 1.75rem;
 
 }
-
-  .titulo-regras {
-    font-size: 3.5rem;
-  }
 
   .paragrafos {
     font-size: 1.5rem;
