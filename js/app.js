@@ -6,6 +6,21 @@ document.addEventListener("DOMContentLoaded", function() {
     let todasCorretas = true;
     let letrasUsadas = [];
 
+    const regrasOverlay = document.getElementById("regras");
+    const botaoRegras = document.getElementById("btn-rules");
+    const vitoriaOverlay = document.getElementById("vitoria");
+    const derrotaOverlay = document.getElementById("derrota");
+
+    regrasOverlay.classList.add("show");
+
+    regrasOverlay.addEventListener("click", function() {
+        regrasOverlay.classList.remove("show");
+    });
+
+    botaoRegras.addEventListener("click", function() {
+        regrasOverlay.classList.add("show");
+    });
+
     function loadFileAsArray(filePath) {
         return fetch(filePath)
             .then(response => response.text())
@@ -114,6 +129,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (todasCorretas) {
             rowInputs.forEach(input => input.style.backgroundColor = "#6AA84F");
+            mostrarTelaVitoria();
+        } else if (currentRow === 6) { // Supondo que o usuário tem 6 tentativas
+            mostrarTelaDerrota();
         }
     }
 
@@ -149,6 +167,7 @@ document.addEventListener("DOMContentLoaded", function() {
             rowInputs.forEach(input => input.style.backgroundColor = "#6AA84F");
             adicionarLetrasUsadas(palavraDigitada);
             atualizarCoresTeclas(palavraDigitada, Array(5).fill("Correto"), palavraSorteada);
+            mostrarTelaVitoria();
             return;
         }
     
@@ -240,33 +259,42 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    function mostrarTelaVitoria() {
+        vitoriaOverlay.classList.add("show");
+        vitoriaOverlay.addEventListener("click", function() {
+            vitoriaOverlay.classList.remove("show");
+        });
+    }
+
+    function mostrarTelaDerrota() {
+        derrotaOverlay.classList.add("show");
+        derrotaOverlay.addEventListener("click", function() {
+            derrotaOverlay.classList.remove("show");
+        });
+    }
+
     function resetarPagina() {
-        // Resetar todas as variáveis ao estado inicial
         currentRow = 1;
         currentInput = 1;
         todasCorretas = true;
         letrasUsadas = [];
 
-        // Resetar todos os inputs
-        const inputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="search"], textarea');
+        const inputs = document.querySelectorAll('input[type="text"]');
         inputs.forEach(input => {
             input.value = '';
             input.style.backgroundColor = '';
             input.disabled = true;
         });
 
-        // Ativar a primeira linha de inputs
         const firstRowInputs = document.querySelectorAll('#row-1 .main-input');
         firstRowInputs.forEach(input => input.disabled = false);
         firstRowInputs[0].focus();
 
-        // Resetar todos os botões do teclado
         const teclas = document.querySelectorAll(".footer-teclado");
         teclas.forEach(tecla => {
             tecla.classList.remove('correto', 'incorreto', 'nao-na-palavra');
         });
 
-        // Obter uma nova palavra
         getRandomWord();
 
         console.log('Página resetada.');
