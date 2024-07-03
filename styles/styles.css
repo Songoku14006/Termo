@@ -398,8 +398,8 @@
 }
 
 .main-input {
-    width: 3.13rem;
-    height: 3.13rem;
+    width: 5vw;
+    height: 5vh;
     color: #F4FDFF;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
@@ -416,8 +416,8 @@
 }
 
 .main-input:disabled {
-    width: 3.13rem;
-    height: 3.13rem;
+    width: 5vw;
+    height: 5vh;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
     font-size: 1.2rem;
@@ -545,8 +545,8 @@
     }
     
     .footer-teclado {
-        width: 40px;
-        height: 40px;
+        width: 2.4rem;
+        height: 2.4rem;
         text-align: center;
         font-size: 1.5rem;
         margin-bottom: 1%;
@@ -570,5 +570,44 @@
         height: 40px;
         font-size: 1.5rem;
     }
+
+}
+
+@media only screen and (max-width: 430px) {
+    
+  .header {
+      margin-bottom: 5%;
+  }
+
+  .main {
+      margin-bottom: 12%;
+  }
+  
+  .footer-teclado {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 1%;
+  }
+
+  .div-backspace-button {
+      width: 40px;
+      height: 40px;
+      background-color: #6099B6;
+  }
+
+  .div-backspace-image {
+      width: 25px;
+      height: 25px;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .div-enter-button {
+      width: 120px;
+      height: 40px;
+      font-size: 1.5rem;
+  }
 
 }
