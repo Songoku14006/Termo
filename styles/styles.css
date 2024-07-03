@@ -140,6 +140,18 @@
     display: flex;
 }
 
+.correto {
+    background-color: #6AA84F;
+}
+
+.incorreto {
+    background-color: #FFD966;
+}
+
+.nao-na-palavra {
+    background-color: #434343;
+}
+
 .div-enter-button {
     width: 8rem;
     height: 3.8rem;
