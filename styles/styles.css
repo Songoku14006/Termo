@@ -62,8 +62,8 @@
 }
 
 .main-input {
-    width: 50px;
-    height: 50px;
+    width: 3.13rem;
+    height: 3.13rem;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
     font-size: 1.75rem;
@@ -97,8 +97,8 @@
 }
 
 .footer-teclado {
-    width: 60px;
-    height: 60px;
+    width: 3.8rem;
+    height: 3.8rem;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
     font-size: 2rem;
@@ -112,34 +112,34 @@
 .teclado-linha2 {
     display: flex;
     align-items: center;
-    gap: 8px;
 }
 
 .div-backspace-button {
-    width: 60px;
-    height: 60px;
+    width: 3.77rem;
+    height: 3.77rem;
     align-items: center;
     justify-content: center;
     background-color: #6099B6;
     cursor: pointer;
     border-radius: 10%;
+    margin-bottom: 10%;
+    margin-left: 6.7%;
 }
 
 .div-backspace-image {
-    width: 50px;
-    height: 50px;
+    width: 3rem;
+    height: 3rem;
     align-items: center;
     justify-content: center;
 }
 
 .teclado-linha3 {
     display: flex;
-    gap: 5px;
 }
 
 .div-enter-button {
-    width: 130px;
-    height: 60px;
+    width: 8rem;
+    height: 3.8rem;
     align-items: center;
     justify-content: center;
     font-family: 'Libre Baskerville', sans-serif;
@@ -147,7 +147,8 @@
     font-size: 2rem;
     background-color: #6099B6;
     cursor: pointer;
-    border-radius: 10%;    
+    border-radius: 8%; 
+    margin-left: 3%;   
 }
 
 @media only screen and (max-width: 650px) {
