@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const botaoRegras = document.getElementById("btn-rules");
     const vitoriaOverlay = document.getElementById("vitoria");
     const derrotaOverlay = document.getElementById("derrota");
+    const palavraNaoEncontradaOverlay = document.getElementById("palavraNaoEncontrada");
+    const palavraIncompletaOverlay = document.getElementById("palavraIncompleta");
 
     regrasOverlay.classList.add("show");
 
@@ -20,6 +22,34 @@ document.addEventListener("DOMContentLoaded", function() {
     botaoRegras.addEventListener("click", function() {
         regrasOverlay.classList.add("show");
     });
+
+    function mostrarTelaVitoria() {
+        vitoriaOverlay.classList.add("show");
+        vitoriaOverlay.addEventListener("click", function() {
+            vitoriaOverlay.classList.remove("show");
+        });
+    }
+
+    function mostrarTelaDerrota() {
+        derrotaOverlay.classList.add("show");
+        derrotaOverlay.addEventListener("click", function() {
+            derrotaOverlay.classList.remove("show");
+        });
+    }
+
+    function mostrarPalavraNaoEncontrada() {
+        palavraNaoEncontradaOverlay.classList.add("show");
+        palavraNaoEncontradaOverlay.addEventListener("click", function() {
+            palavraNaoEncontradaOverlay.classList.remove("show");
+        });
+    }
+
+    function mostrarPalavraIncompleta() {
+        palavraIncompletaOverlay.classList.add("show");
+        palavraIncompletaOverlay.addEventListener("click", function() {
+            palavraIncompletaOverlay.classList.remove("show");
+        });
+    }
 
     function loadFileAsArray(filePath) {
         return fetch(filePath)
@@ -129,9 +159,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (todasCorretas) {
             rowInputs.forEach(input => input.style.backgroundColor = "#6AA84F");
-            mostrarTelaVitoria();
-        } else if (currentRow === 6) { // Supondo que o usuário tem 6 tentativas
-            mostrarTelaDerrota();
         }
     }
 
@@ -148,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let palavraDigitada = Array.from(rowInputs).map(input => input.value).join('');
 
         if (palavraDigitada.length !== 5) {
-            console.log("Digite todas as letras para verificar.");
+            mostrarPalavraIncompleta();
             return;
         }
     
@@ -158,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const palavrasSemAcentos = palavras.map(palavra => removeAcentos(palavra.toLowerCase()));
     
         if (!palavrasSemAcentos.includes(palavraDigitadaSemAcentos)) {
-            console.log("Palavra não encontrada no array de palavras.");
+            mostrarPalavraNaoEncontrada();
             return;
         }
 
@@ -167,7 +194,6 @@ document.addEventListener("DOMContentLoaded", function() {
             rowInputs.forEach(input => input.style.backgroundColor = "#6AA84F");
             adicionarLetrasUsadas(palavraDigitada);
             atualizarCoresTeclas(palavraDigitada, Array(5).fill("Correto"), palavraSorteada);
-            mostrarTelaVitoria();
             return;
         }
     
@@ -213,7 +239,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 letrasUsadas.push(letra);
             }
         }
-        console.log("Letras usadas:", letrasUsadas);
     }
 
     function atualizarCoresTeclas(palavraDigitada, resultado, palavraSorteada) {
@@ -273,6 +298,20 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    function mostrarPalavraNaoEncontrada() {
+        palavraNaoEncontradaOverlay.classList.add("show");
+        setTimeout(() => {
+            palavraNaoEncontradaOverlay.classList.remove("show");
+        }, 3000); // Remove após 3 segundos (3000 milissegundos)
+    }
+    
+    function mostrarPalavraIncompleta() {
+        palavraIncompletaOverlay.classList.add("show");
+        setTimeout(() => {
+            palavraIncompletaOverlay.classList.remove("show");
+        }, 3000); // Remove após 3 segundos (3000 milissegundos)
+    }
+
     function resetarPagina() {
         currentRow = 1;
         currentInput = 1;
@@ -296,8 +335,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         getRandomWord();
-
-        console.log('Página resetada.');
     }
 
     init();
