@@ -154,7 +154,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 5px;
+    gap: 2px;
   }
 
   .letra-tentativa-1 {
@@ -225,7 +225,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 5px;
+    gap: 2px;
   }
 
   .letra-tentativa-2 {
@@ -296,7 +296,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 5px;
+    gap: 2px;
   }
 
   .letra-tentativa-3 {
@@ -356,35 +356,35 @@
 }
 
 .header-botao-regras {
-    height: 2vw;
-    width: 2vw;
+    height: 3.5vw;
+    width: 3.5vw;
     border-radius: 100%;
     background-color: #6099B6;
 }
 
 .header-imagem-regras {
-    height: 1.5vw;
-    width: 1.5vw;
+    height: 2vw;
+    width: 2vw;
 }
 
 .header-titulo {
     font-family: 'JetBrains Mono', sans-serif;
     font-size: 5vw;
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 18.25%;
+    margin-right: 18.25%;
 }
 
 .header-botao-restart {
-    height: 2vw;
-    width: 2vw;
+    height: 3.5vw;
+    width: 3.5vw;
     border-radius: 100%;
     background-color: #6099B6;
     justify-content: center;
 }
 
 .header-img-restart {
-    height: 1.5vw;
-    width: 1.5vw;
+    height: 2vw;
+    width: 2vw;
     align-items: center;
 }
 
@@ -393,17 +393,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px;
-    margin-bottom: 0.5%;
+    margin: 1vw;
 }
 
 .main-input {
-    width: 4vw;
-    height: 4vw;
+    width: 4.25vw;
+    height: 4.25vw;
     color: #F4FDFF;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
-    font-size: 1.75rem;
+    font-size: 2vw;
+    margin: 0.1vw;
     text-transform: uppercase;
     background-color: #6099B6;
     border-radius: 10%;
@@ -416,12 +416,7 @@
 }
 
 .main-input:disabled {
-    font-family: 'Libre Baskerville', sans-serif;
-    text-align: center;
-    font-size: 1.2rem;
-    text-transform: uppercase;
     background-color: #617D8B;
-    border-radius: 10%;
 }
 
 .footer {
@@ -429,6 +424,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 2%;
 }
 
 .footer-teclado {
@@ -436,12 +432,12 @@
     height: 4.5vw;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
-    font-size: 2.5vw;
+    font-size: 3vw;
     background-color: #6099B6;
     border-radius: 10%;
     cursor: pointer;
     user-select: none;
-    margin-bottom: 0.5%;
+    margin-bottom: 1%;
 }
 
 .teclado-linha2 {
@@ -450,8 +446,8 @@
 }
 
 .div-backspace-button {
-    width: 4vw;
-    height: 4.3vw;
+    width: 4.5vw;
+    height: 4.5vw;
     align-items: center;
     justify-content: center;
     background-color: #6099B6;
@@ -499,42 +495,132 @@
     margin-left: 3%;   
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   
+  .exemplo-tentativa-1,
+  .exemplo-tentativa-2,
+  .exemplo-tentativa-3,
+  .letra-2-tentativa-1,
+  .letra-2-tentativa-2,
+  .letra-2-tentativa-3,
+  .letra-tentativa-1,
+  .letra-tentativa-2,
+  .letra-tentativa-3{
+      width: 4.5vh;
+      height: 4.5vh;
+      font-size: 3vh;
+  }
+
+  .texto-tentativa-1,
+  .texto-tentativa-2,
+  .texto-tentativa-3 {
+    gap: 2px;
+  }
+
+  .overlay-content {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .paragrafos {
+    font-size: 3.5vw;
+  }
+
+  .header-titulo {
+    font-size: 8vh;
+    margin-left: 6vw;
+    margin-right: 6vw;
+  }
+
   .header-botao-regras, .header-botao-restart {
-    height: 3vw;
-    width: 3vw;
+    height: 3vh;
+    width: 3vh;
   }
 
   .header-imagem-regras, .header-img-restart {
-    height: 2vw;
-    width: 2vw;
+    height: 2vh;
+    width: 2vh;
   }
 
   .main-input {
-      width: 5vw;
-      height: 5vw;
+      width: 7vh;
+      height: 7vh;
+      font-size: 4vh;
   }
 
   .footer-teclado {
-    width: 6vw;
-    height: 6vw;
-    font-size: 3vw;
+    width: 8vw;
+    height: 6vh;
+    font-size: 3vh;
   }
 
   .div-backspace-button {
     width: 6vw;
-    height: 6vw;
+    height: 6vh;
   }
 
   .div-backspace-image {
-    width: 4vw;
-    height: 4vw;
+    width: 100%;
+    height: auto;
   }
 
   .div-enter-button {
-    width: 12vw;
-    height: 6vw;
-    font-size: 3vw;
+    width: 12vh;
+    height: 6vh;
+    font-size: 3vh;
   }
+}
+
+@media only screen and (max-width: 400px) {
+  
+  .header-titulo {
+    margin-left: 5vw;
+    margin-right: 5vw;
+  }
+
+  .main-input {
+    width: 15vw;
+    height: 15vw;
+  }
+}
+
+@media only screen and (min-height: 900px) {
+  
+  .overlay-content, .vitoria-overlay-content, .derrota-overlay-content, .aviso-overlay-content {
+    margin-bottom: 40vh;
+} 
+
+.overlay-content {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.main-input {
+  width: 4.5vh;
+  height: 4.5vh;
+  font-size: 2.5vh;
+}
+
+.footer-teclado {
+  width: 8vw;
+  height: 5vh;
+  font-size: 3vh;
+}
+
+.div-enter-button {
+  width: 11vh;
+  height: 5vh;
+  font-size: 3vh;
+}
+
+.div-backspace-button {
+  width: 5vw;
+  height: 5vh;
+}
+
+.div-backspace-image {
+  width: 100%;
+  height: auto;
+}
+
 }
