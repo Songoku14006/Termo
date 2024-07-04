@@ -497,6 +497,18 @@
 
 @media only screen and (max-width: 800px) {
   
+  .correto {
+    background-color: #6AA84F;
+}
+
+.incorreto {
+    background-color: #FFD966;
+}
+
+.nao-na-palavra {
+    background-color: #434343;
+}
+  
   .exemplo-tentativa-1,
   .exemplo-tentativa-2,
   .exemplo-tentativa-3,
@@ -573,6 +585,18 @@
 
 @media only screen and (max-width: 400px) {
   
+  .correto {
+    background-color: #6AA84F;
+}
+
+.incorreto {
+    background-color: #FFD966;
+}
+
+.nao-na-palavra {
+    background-color: #434343;
+}
+
   .header-titulo {
     margin-left: 5vw;
     margin-right: 5vw;
@@ -586,6 +610,18 @@
 
 @media only screen and (min-height: 900px) {
   
+  .correto {
+    background-color: #6AA84F;
+}
+
+.incorreto {
+    background-color: #FFD966;
+}
+
+.nao-na-palavra {
+    background-color: #434343;
+}
+
   .overlay-content, .vitoria-overlay-content, .derrota-overlay-content, .aviso-overlay-content {
     margin-bottom: 40vh;
 } 
