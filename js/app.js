@@ -12,28 +12,21 @@ document.addEventListener("DOMContentLoaded", () => {
         NOT_IN_WORD: "#434343"
     };
 
-    const regrasOverlay = document.getElementById("regras");
-    const botaoRegras = document.getElementById("btn-rules");
-    const vitoriaOverlay = document.getElementById("vitoria");
-    const derrotaOverlay = document.getElementById("derrota");
-    const palavraNaoEncontradaOverlay = document.getElementById("palavraNaoEncontrada");
-    const palavraIncompletaOverlay = document.getElementById("palavraIncompleta");
-
     const overlays = {
-        regrasOverlay,
-        vitoriaOverlay,
-        derrotaOverlay,
-        palavraNaoEncontradaOverlay,
-        palavraIncompletaOverlay
+        regrasOverlay: document.getElementById("regras"),
+        vitoriaOverlay: document.getElementById("vitoria"),
+        derrotaOverlay: document.getElementById("derrota"),
+        palavraNaoEncontradaOverlay: document.getElementById("palavraNaoEncontrada"),
+        palavraIncompletaOverlay: document.getElementById("palavraIncompleta")
     };
 
-    regrasOverlay.classList.add("show");
+    overlays.regrasOverlay.classList.add("show");
 
     Object.values(overlays).forEach(overlay => {
         overlay.addEventListener("click", () => overlay.classList.remove("show"));
     });
 
-    botaoRegras.addEventListener("click", () => regrasOverlay.classList.add("show"));
+    document.getElementById("btn-rules").addEventListener("click", () => overlays.regrasOverlay.classList.add("show"));
 
     const showOverlay = (overlay) => {
         overlay.classList.add("show");
@@ -58,20 +51,20 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const setupEventListeners = () => {
-        const letras = document.querySelectorAll(".footer-teclado");
-        letras.forEach(letra => letra.addEventListener("click", handleLetterButtonClick));
-
+        document.querySelectorAll(".footer-teclado").forEach(tecla => tecla.addEventListener("click", handleLetterButtonClick));
         document.addEventListener('keydown', handleKeyDown);
         document.addEventListener('focus', handleFocus, true);
 
         const backspace = document.querySelector(".div-backspace-button");
         if (backspace) backspace.addEventListener("click", btnBackspace);
 
-        const enterButton = document.getElementById('enter');
-        if (enterButton) enterButton.addEventListener('click', verificarPalavra);
+        addClickListener('enter', verificarPalavra);
+        addClickListener('btn-restart', resetarPagina);
+    };
 
-        const restartButton = document.getElementById('btn-restart');
-        if (restartButton) restartButton.addEventListener('click', resetarPagina);
+    const addClickListener = (id, handler) => {
+        const button = document.getElementById(id);
+        if (button) button.addEventListener('click', handler);
     };
 
     const handleKeyDown = (event) => {
@@ -86,11 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const handleFocus = (event) => {
-        const focusedElement = document.activeElement;
-        const numberMatch = focusedElement.id.match(/input-(\d+)/);
-        if (numberMatch) {
-            currentInput = parseInt(numberMatch[1], 10);
-        }
+        const idMatch = event.target.id.match(/input-(\d+)/);
+        if (idMatch) currentInput = parseInt(idMatch[1], 10);
     };
 
     const getRandomWord = () => {
@@ -101,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const insertLetter = (letter) => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
-
         if (currentInput <= rowInputs.length) {
             rowInputs[currentInput - 1].value = letter;
             rowInputs[currentInput - 1].focus();
@@ -116,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnBackspace = () => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
         currentInput = Math.max(currentInput - 1, 1);
-
         for (let i = rowInputs.length - 1; i >= 0; i--) {
             if (rowInputs[i].value !== "") {
                 rowInputs[i].value = "";
@@ -127,11 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
         rowInputs[currentInput - 1].focus();
     };
 
-    const removeAcentos = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    const removeAccents = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
     const alterarCoresInputs = (resultado) => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
-    
         rowInputs.forEach((input, index) => {
             const status = resultado[index];
             const cor = {
@@ -139,14 +126,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Incorreto": COLORS.INCORRECT,
                 "Não está na palavra": COLORS.NOT_IN_WORD
             }[status] || "";
-            
-            input.setAttribute("style", `background-color: ${cor} !important`);
-            
+            input.style.backgroundColor = cor;
             if (status !== "Correto") todasCorretas = false;
         });
     };
-    
-    
 
     const ativarProximaLinha = () => {
         const currentInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
@@ -157,59 +140,57 @@ document.addEventListener("DOMContentLoaded", () => {
         currentInput = 1;
         document.getElementById(`main-input-${currentInput}`)?.focus();
     };
-    
 
     const verificarPalavra = () => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
-        let palavraDigitada = Array.from(rowInputs).map(input => input.value).join('');
-    
+        const palavraDigitada = Array.from(rowInputs).map(input => input.value).join('');
+
         if (palavraDigitada.length !== 5) {
-            showOverlay(palavraIncompletaOverlay);
+            showOverlay(overlays.palavraIncompletaOverlay);
             return;
         }
-    
+
         const palavraSorteada = palavras[posicao];
-        const palavraDigitadaSemAcentos = removeAcentos(palavraDigitada.toLowerCase());
-        const palavrasSemAcentos = palavras.map(palavra => removeAcentos(palavra.toLowerCase()));
-    
+        const palavraDigitadaSemAcentos = removeAccents(palavraDigitada.toLowerCase());
+        const palavrasSemAcentos = palavras.map(palavra => removeAccents(palavra.toLowerCase()));
+
         if (!palavrasSemAcentos.includes(palavraDigitadaSemAcentos)) {
-            showOverlay(palavraNaoEncontradaOverlay);
+            showOverlay(overlays.palavraNaoEncontradaOverlay);
             return;
         }
-    
-        if (palavraDigitadaSemAcentos === removeAcentos(palavraSorteada.toLowerCase())) {
+
+        if (palavraDigitadaSemAcentos === removeAccents(palavraSorteada.toLowerCase())) {
             rowInputs.forEach(input => input.style.backgroundColor = COLORS.CORRECT);
             adicionarLetrasUsadas(palavraDigitada);
             atualizarCoresTeclas(palavraDigitada, Array(5).fill("Correto"), palavraSorteada);
-            showOverlay(vitoriaOverlay);
+            showOverlay(overlays.vitoriaOverlay);
             return;
         } else if (currentRow === 6) {
             mostrarTelaDerrota(palavraSorteada);
         }
-    
+
         const resultado = verificarResultado(palavraDigitada, palavraSorteada);
         alterarCoresInputs(resultado);
         adicionarLetrasUsadas(palavraDigitada);
         atualizarCoresTeclas(palavraDigitada, resultado, palavraSorteada);
         ativarProximaLinha();
     };
-    
 
     const verificarResultado = (palavraDigitada, palavraSorteada) => {
         const resultado = Array(palavraDigitada.length).fill(null);
         const letraContagem = {};
-    
+
         for (let letra of palavraSorteada) {
             letraContagem[letra] = (letraContagem[letra] || 0) + 1;
         }
-    
+
         for (let i = 0; i < palavraDigitada.length; i++) {
             if (palavraDigitada[i] === palavraSorteada[i]) {
                 resultado[i] = "Correto";
                 letraContagem[palavraDigitada[i]]--;
             }
         }
-    
+
         for (let i = 0; i < palavraDigitada.length; i++) {
             if (resultado[i] === null) {
                 if (letraContagem[palavraDigitada[i]] > 0) {
@@ -220,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
-        
+
         return resultado;
     };
 
@@ -246,17 +227,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (status === "Correto") {
                         tecla.classList.remove('incorreto', 'nao-na-palavra');
                         tecla.classList.add('correto');
-                        letrasCorretas.add(teclaTexto);
-                        console.log('virou verde');
                     } else if (status === "Incorreto" && !tecla.classList.contains('correto')) {
                         tecla.classList.remove('nao-na-palavra');
                         tecla.classList.add('incorreto');
-                        console.log('virou amarelo');
                     } else if (status === "Não está na palavra" && !tecla.classList.contains('correto')) {
                         tecla.classList.remove('incorreto');
                         tecla.classList.add('nao-na-palavra');
-                        console.log('virou preto');
                     }
+                    letrasCorretas.add(teclaTexto);
                 }
             });
         }
@@ -281,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mostrarTelaDerrota = (palavraCorreta) => {
         const derrotaOverlayContent = document.querySelector(".derrota-overlay-content");
         derrotaOverlayContent.innerHTML = `A palavra correta era: ${palavraCorreta}`;
-        showOverlay(derrotaOverlay);
+        showOverlay(overlays.derrotaOverlay);
     };
 
     const resetarPagina = () => {
@@ -290,19 +268,18 @@ document.addEventListener("DOMContentLoaded", () => {
         todasCorretas = true;
         letrasUsadas = [];
 
-        const inputs = document.querySelectorAll('input[type="text"]');
-        inputs.forEach(input => {
+        document.querySelectorAll('input[type="text"]').forEach(input => {
             input.value = '';
             input.style.backgroundColor = '';
             input.disabled = true;
         });
 
-        const firstRowInputs = document.querySelectorAll('#row-1 .main-input');
-        firstRowInputs.forEach(input => input.disabled = false);
-        firstRowInputs[0].focus();
+        document.querySelectorAll('#row-1 .main-input').forEach((input, index) => {
+            input.disabled = false;
+            if (index === 0) input.focus();
+        });
 
-        const teclas = document.querySelectorAll(".footer-teclado");
-        teclas.forEach(tecla => {
+        document.querySelectorAll(".footer-teclado").forEach(tecla => {
             tecla.classList.remove('correto', 'incorreto', 'nao-na-palavra');
         });
 
