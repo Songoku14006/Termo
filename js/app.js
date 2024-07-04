@@ -255,20 +255,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!letrasCorretas.has(teclaTexto) && teclaTexto === letraDigitada.toLowerCase()) {
                     if (status === "Correto") {
                         tecla.classList.remove('incorreto', 'nao-na-palavra');
-                        console.log(tecla);
                         tecla.classList.add('correto');
                         letrasCorretas.add(teclaTexto);
-                        console.log(tecla);
+                        console.log('virou verde');
                     } else if (status === "Incorreto" && !tecla.classList.contains('correto')) {
                         tecla.classList.remove('nao-na-palavra');
-                        console.log(tecla);
                         tecla.classList.add('incorreto');
-                        console.log(tecla);
+                        console.log('virou amarelo');
                     } else if (status === "Não está na palavra" && !tecla.classList.contains('correto')) {
                         tecla.classList.remove('incorreto');
-                        console.log(tecla);
                         tecla.classList.add('nao-na-palavra');
-                        console.log(tecla);
+                        console.log('virou preto');
                     }
                     console.log(`Tecla ${teclaTexto}: ${tecla.classList}`);
                 }
