@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(filePath);
             const text = await response.text();
-            return text.split('\n').map(word => word.trim()).filter(word => word.length > 0);
+            return text.split('\n').map(word => word.trim()).filter(Boolean);
         } catch (error) {
             console.error('Erro ao carregar o arquivo:', error);
             return [];
@@ -90,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const numberMatch = focusedElement.id.match(/input-(\d+)/);
         if (numberMatch) {
             currentInput = parseInt(numberMatch[1], 10);
-            console.log(currentInput);
         }
     };
 
@@ -174,7 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (palavraDigitadaSemAcentos === removeAcentos(palavraSorteada.toLowerCase())) {
-            console.log("Palavra correta!");
             rowInputs.forEach(input => input.style.backgroundColor = COLORS.CORRECT);
             adicionarLetrasUsadas(palavraDigitada);
             atualizarCoresTeclas(palavraDigitada, Array(5).fill("Correto"), palavraSorteada);
@@ -216,7 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
-        console.log(resultado)
         return resultado;
     };
 
