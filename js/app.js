@@ -140,11 +140,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Incorreto": COLORS.INCORRECT,
                 "Não está na palavra": COLORS.NOT_IN_WORD
             }[status] || "";
-            input.style.backgroundColor = cor;
+            
+            input.setAttribute("style", `background-color: ${cor} !important`);
             console.log(`Input ${index + 1}: ${cor}`);
+            
             if (status !== "Correto") todasCorretas = false;
         });
+        console.log('alterarCoresInputs executado até o fim');
     };
+    
     
 
     const ativarProximaLinha = () => {
