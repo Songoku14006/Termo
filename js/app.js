@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         rowInputs[currentInput - 1].focus();
     };
 
-    const removeAcentos = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const removeAcentos = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
     const alterarCoresInputs = (resultado) => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
@@ -141,10 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Não está na palavra": COLORS.NOT_IN_WORD
             }[status] || "";
             input.style.backgroundColor = cor;
-            console.log(`Input ${index + 1}: ${cor}`); // Adicione este log para verificar as cores
+            console.log(`Input ${index + 1}: ${cor}`);
             if (status !== "Correto") todasCorretas = false;
         });
     };
+    
 
     const ativarProximaLinha = () => {
         const currentInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
@@ -155,25 +156,26 @@ document.addEventListener("DOMContentLoaded", () => {
         currentInput = 1;
         document.getElementById(`main-input-${currentInput}`)?.focus();
     };
+    
 
     const verificarPalavra = () => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
         let palavraDigitada = Array.from(rowInputs).map(input => input.value).join('');
-
+    
         if (palavraDigitada.length !== 5) {
             showOverlay(palavraIncompletaOverlay);
             return;
         }
-
+    
         const palavraSorteada = palavras[posicao];
         const palavraDigitadaSemAcentos = removeAcentos(palavraDigitada.toLowerCase());
         const palavrasSemAcentos = palavras.map(palavra => removeAcentos(palavra.toLowerCase()));
-
+    
         if (!palavrasSemAcentos.includes(palavraDigitadaSemAcentos)) {
             showOverlay(palavraNaoEncontradaOverlay);
             return;
         }
-
+    
         if (palavraDigitadaSemAcentos === removeAcentos(palavraSorteada.toLowerCase())) {
             rowInputs.forEach(input => input.style.backgroundColor = COLORS.CORRECT);
             adicionarLetrasUsadas(palavraDigitada);
@@ -183,29 +185,36 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (currentRow === 6) {
             mostrarTelaDerrota(palavraSorteada);
         }
-
+    
         const resultado = verificarResultado(palavraDigitada, palavraSorteada);
         alterarCoresInputs(resultado);
         adicionarLetrasUsadas(palavraDigitada);
         atualizarCoresTeclas(palavraDigitada, resultado, palavraSorteada);
         ativarProximaLinha();
     };
+    
 
     const verificarResultado = (palavraDigitada, palavraSorteada) => {
         const resultado = Array(palavraDigitada.length).fill(null);
         const letraContagem = {};
-
+    
         for (let letra of palavraSorteada) {
             letraContagem[letra] = (letraContagem[letra] || 0) + 1;
         }
-
+    
+        console.log("Palavra sorteada:", palavraSorteada);
+        console.log("Palavra digitada:", palavraDigitada);
+        console.log("Contagem de letras:", letraContagem);
+    
         for (let i = 0; i < palavraDigitada.length; i++) {
             if (palavraDigitada[i] === palavraSorteada[i]) {
                 resultado[i] = "Correto";
                 letraContagem[palavraDigitada[i]]--;
             }
         }
-
+    
+        console.log("Resultado após primeira passagem:", resultado);
+    
         for (let i = 0; i < palavraDigitada.length; i++) {
             if (resultado[i] === null) {
                 if (letraContagem[palavraDigitada[i]] > 0) {
@@ -216,6 +225,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
+    
+        console.log("Resultado final:", resultado);
         return resultado;
     };
 
