@@ -163,6 +163,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function ativarProximaLinha() {
+        const currentInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
+        currentInputs.forEach(input => input.disabled = true);
         currentRow++;
         const nextInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
         nextInputs.forEach(input => input.disabled = false);

@@ -58,12 +58,12 @@
 }
 
 .derrota-overlay-content  {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-family: 'Libre Baskerville', sans-serif;
 }
 
 .titulo-vitoria {
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-family: 'Libre Baskerville', sans-serif;
 }
 
@@ -351,40 +351,40 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: 1%;
-    margin-bottom: 1%;
+    margin-top: 0.001%;
+    margin-bottom: 0.01%;
 }
 
 .header-botao-regras {
-    height: 30px;
-    width: 30px;
+    height: 2vw;
+    width: 2vw;
     border-radius: 100%;
     background-color: #6099B6;
 }
 
 .header-imagem-regras {
-    height: 22px;
-    width: 22px;
+    height: 1.5vw;
+    width: 1.5vw;
 }
 
 .header-titulo {
     font-family: 'JetBrains Mono', sans-serif;
-    font-size: 4rem;
+    font-size: 5rem;
     margin-left: 20%;
     margin-right: 20%;
 }
 
 .header-botao-restart {
-    height: 30px;
-    width: 30px;
+    height: 2vw;
+    width: 2vw;
     border-radius: 100%;
     background-color: #6099B6;
     justify-content: center;
 }
 
 .header-img-restart {
-    height: 24px;
-    width: 24px;
+    height: 1.5vw;
+    width: 1.5vw;
     align-items: center;
 }
 
@@ -394,12 +394,12 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    margin-bottom: 1%;
+    margin-bottom: 0.5%;
 }
 
 .main-input {
-    width: 5vw;
-    height: 5vh;
+    width: 3.5vw;
+    height: 3.5vw;
     color: #F4FDFF;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
@@ -416,8 +416,6 @@
 }
 
 .main-input:disabled {
-    width: 5vw;
-    height: 5vh;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
     font-size: 1.2rem;
@@ -434,16 +432,16 @@
 }
 
 .footer-teclado {
-    width: 3.8rem;
-    height: 3.8rem;
+    width: 3.5vw;
+    height: 4vw;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.5vw;
     background-color: #6099B6;
     border-radius: 10%;
     cursor: pointer;
     user-select: none;
-    margin-bottom: 1%;
+    margin-bottom: 0.5%;
 }
 
 .teclado-linha2 {
@@ -452,8 +450,8 @@
 }
 
 .div-backspace-button {
-    width: 3.77rem;
-    height: 3.77rem;
+    width: 3vw;
+    height: 4vw;
     align-items: center;
     justify-content: center;
     background-color: #6099B6;
@@ -464,8 +462,8 @@
 }
 
 .div-backspace-image {
-    width: 3rem;
-    height: 3rem;
+    width: 2.25vw;
+    height: 2.25vw;
     align-items: center;
     justify-content: center;
 }
@@ -487,13 +485,13 @@
 }
 
 .div-enter-button {
-    width: 8rem;
-    height: 3.8rem;
+    width: 8vw;
+    height: 4vw;
     align-items: center;
     justify-content: center;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.5vw;
     background-color: #6099B6;
     cursor: pointer;
     border-radius: 8%; 
@@ -502,112 +500,34 @@
 
 @media only screen and (max-width: 650px) {
     
-    .main {
-        margin-bottom: 5%;
-    }
-    
-    .footer-teclado {
-        width: 50px;
-        height: 50px;
-        text-align: center;
-        font-size: 1.75rem;
-    }
-
-    .div-backspace-button {
-        width: 50px;
-        height: 50px;
-        background-color: #6099B6;
-    }
-
-    .div-backspace-image {
-        width: 30px;
-        height: 30px;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .div-enter-button {
-        width: 120px;
-        height: 50px;
-        font-size: 1.75rem;
-    }
-
-}
-
-@media only screen and (max-width: 550px) {
-    
-    .header {
-        margin-bottom: 5%;
-    }
-
-    .main {
-        margin-bottom: 12%;
-    }
-    
-    .footer-teclado {
-        width: 2.4rem;
-        height: 2.4rem;
-        text-align: center;
-        font-size: 1.5rem;
-        margin-bottom: 1%;
-    }
-
-    .div-backspace-button {
-        width: 40px;
-        height: 40px;
-        background-color: #6099B6;
-    }
-
-    .div-backspace-image {
-        width: 25px;
-        height: 25px;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .div-enter-button {
-        width: 120px;
-        height: 40px;
-        font-size: 1.5rem;
-    }
-
-}
-
-@media only screen and (max-width: 430px) {
-    
-  .header {
-      margin-bottom: 5%;
-  }
-
   .main {
-      margin-bottom: 12%;
+      margin-bottom: 5%;
   }
   
   .footer-teclado {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       text-align: center;
-      font-size: 1.5rem;
-      margin-bottom: 1%;
+      font-size: 1.75rem;
   }
 
   .div-backspace-button {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       background-color: #6099B6;
   }
 
   .div-backspace-image {
-      width: 25px;
-      height: 25px;
+      width: 30px;
+      height: 30px;
       align-items: center;
       justify-content: center;
   }
 
   .div-enter-button {
       width: 120px;
-      height: 40px;
-      font-size: 1.5rem;
+      height: 50px;
+      font-size: 1.75rem;
   }
 
 }
