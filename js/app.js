@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const getRandomWord = () => {
         posicao = getRandomNumber(palavras.length);
-        console.log(palavras[posicao]);
     };
 
     const getRandomNumber = (size) => Math.floor(Math.random() * size);
@@ -142,11 +141,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }[status] || "";
             
             input.setAttribute("style", `background-color: ${cor} !important`);
-            console.log(`Input ${index + 1}: ${cor}`);
             
             if (status !== "Correto") todasCorretas = false;
         });
-        console.log('alterarCoresInputs executado até o fim');
     };
     
     
@@ -206,18 +203,12 @@ document.addEventListener("DOMContentLoaded", () => {
             letraContagem[letra] = (letraContagem[letra] || 0) + 1;
         }
     
-        console.log("Palavra sorteada:", palavraSorteada);
-        console.log("Palavra digitada:", palavraDigitada);
-        console.log("Contagem de letras:", letraContagem);
-    
         for (let i = 0; i < palavraDigitada.length; i++) {
             if (palavraDigitada[i] === palavraSorteada[i]) {
                 resultado[i] = "Correto";
                 letraContagem[palavraDigitada[i]]--;
             }
         }
-    
-        console.log("Resultado após primeira passagem:", resultado);
     
         for (let i = 0; i < palavraDigitada.length; i++) {
             if (resultado[i] === null) {
@@ -229,8 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
-    
-        console.log("Resultado final:", resultado);
+        
         return resultado;
     };
 
@@ -267,7 +257,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         tecla.classList.add('nao-na-palavra');
                         console.log('virou preto');
                     }
-                    console.log(`Tecla ${teclaTexto}: ${tecla.classList}`);
                 }
             });
         }
