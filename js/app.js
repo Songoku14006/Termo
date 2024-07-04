@@ -132,14 +132,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const alterarCoresInputs = (resultado) => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
-
+    
         rowInputs.forEach((input, index) => {
             const status = resultado[index];
-            input.style.backgroundColor = {
+            const cor = {
                 "Correto": COLORS.CORRECT,
                 "Incorreto": COLORS.INCORRECT,
                 "Não está na palavra": COLORS.NOT_IN_WORD
             }[status] || "";
+            input.style.backgroundColor = cor;
+            console.log(`Input ${index + 1}: ${cor}`); // Adicione este log para verificar as cores
             if (status !== "Correto") todasCorretas = false;
         });
     };
@@ -247,6 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         tecla.classList.remove('incorreto');
                         tecla.classList.add('nao-na-palavra');
                     }
+                    console.log(`Tecla ${teclaTexto}: ${tecla.classList}`);
                 }
             });
         }
