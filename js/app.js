@@ -156,10 +156,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }[status] || "";
             if (status !== "Correto") todasCorretas = false;
         });
-
-        if (todasCorretas) {
-            rowInputs.forEach(input => input.style.backgroundColor = "#6AA84F");
-        }
     }
 
     function ativarProximaLinha() {
@@ -346,6 +342,5 @@ document.addEventListener("DOMContentLoaded", function() {
 
         getRandomWord();
     }
-
     init();
 });
