@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         }
-
+        console.log(resultado)
         return resultado;
     }
 
