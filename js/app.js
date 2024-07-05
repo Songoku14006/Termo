@@ -177,20 +177,34 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const verificarResultado = (palavraDigitada, palavraSorteada) => {
+        // Verifique se as palavras são do mesmo tamanho
+        if (palavraDigitada.length !== palavraSorteada.length) {
+            console.error("As palavras devem ter o mesmo tamanho.");
+            return [];
+        }
+    
         const resultado = Array(palavraDigitada.length).fill(null);
         const letraContagem = {};
-
+    
+        // Contagem de letras na palavra sorteada
         for (let letra of palavraSorteada) {
             letraContagem[letra] = (letraContagem[letra] || 0) + 1;
         }
-
+    
+        console.log("Contagem de letras:", letraContagem);
+    
+        // Verificação de letras corretas na posição correta
         for (let i = 0; i < palavraDigitada.length; i++) {
             if (palavraDigitada[i] === palavraSorteada[i]) {
                 resultado[i] = "Correto";
                 letraContagem[palavraDigitada[i]]--;
             }
         }
-
+    
+        console.log("Resultado após verificação correta:", resultado);
+        console.log("Contagem de letras após verificação correta:", letraContagem);
+    
+        // Verificação de letras corretas na posição incorreta
         for (let i = 0; i < palavraDigitada.length; i++) {
             if (resultado[i] === null) {
                 if (letraContagem[palavraDigitada[i]] > 0) {
@@ -201,7 +215,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
-
+    
+        console.log("Resultado final:", resultado);
+    
         return resultado;
     };
 
