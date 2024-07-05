@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
     let currentRow = 1;
     let currentInput = 1;
     let palavras = [];
@@ -6,130 +6,105 @@ document.addEventListener("DOMContentLoaded", function() {
     let todasCorretas = true;
     let letrasUsadas = [];
 
-    const regrasOverlay = document.getElementById("regras");
-    const botaoRegras = document.getElementById("btn-rules");
-    const vitoriaOverlay = document.getElementById("vitoria");
-    const derrotaOverlay = document.getElementById("derrota");
-    const palavraNaoEncontradaOverlay = document.getElementById("palavraNaoEncontrada");
-    const palavraIncompletaOverlay = document.getElementById("palavraIncompleta");
+    const COLORS = {
+        CORRECT: "#6AA84F",
+        INCORRECT: "#FFD966",
+        NOT_IN_WORD: "#434343"
+    };
 
-    regrasOverlay.classList.add("show");
+    const overlays = {
+        regrasOverlay: document.getElementById("regras"),
+        vitoriaOverlay: document.getElementById("vitoria"),
+        derrotaOverlay: document.getElementById("derrota"),
+        palavraNaoEncontradaOverlay: document.getElementById("palavraNaoEncontrada"),
+        palavraIncompletaOverlay: document.getElementById("palavraIncompleta")
+    };
 
-    regrasOverlay.addEventListener("click", function() {
-        regrasOverlay.classList.remove("show");
+    overlays.regrasOverlay.classList.add("show");
+
+    Object.values(overlays).forEach(overlay => {
+        overlay.addEventListener("click", () => overlay.classList.remove("show"));
     });
 
-    botaoRegras.addEventListener("click", function() {
-        regrasOverlay.classList.add("show");
-    });
+    document.getElementById("btn-rules").addEventListener("click", () => overlays.regrasOverlay.classList.add("show"));
 
-    function mostrarTelaVitoria() {
-        vitoriaOverlay.classList.add("show");
-        vitoriaOverlay.addEventListener("click", function() {
-            vitoriaOverlay.classList.remove("show");
-        });
-    }
+    const showOverlay = (overlay) => {
+        overlay.classList.add("show");
+        setTimeout(() => overlay.classList.remove("show"), 1500);
+    };
 
-    function mostrarTelaDerrota() {
-        derrotaOverlay.classList.add("show");
-        derrotaOverlay.addEventListener("click", function() {
-            derrotaOverlay.classList.remove("show");
-        });
-    }
+    const loadFileAsArray = async (filePath) => {
+        try {
+            const response = await fetch(filePath);
+            const text = await response.text();
+            return text.split('\n').map(word => word.trim()).filter(Boolean);
+        } catch (error) {
+            console.error('Erro ao carregar o arquivo:', error);
+            return [];
+        }
+    };
 
-    function mostrarPalavraNaoEncontrada() {
-        palavraNaoEncontradaOverlay.classList.add("show");
-        palavraNaoEncontradaOverlay.addEventListener("click", function() {
-            palavraNaoEncontradaOverlay.classList.remove("show");
-        });
-    }
+    const init = async () => {
+        palavras = await loadFileAsArray('biblioteca/palavras.txt');
+        getRandomWord();
+        setupEventListeners();
+    };
 
-    function mostrarPalavraIncompleta() {
-        palavraIncompletaOverlay.classList.add("show");
-        palavraIncompletaOverlay.addEventListener("click", function() {
-            palavraIncompletaOverlay.classList.remove("show");
-        });
-    }
-
-    function loadFileAsArray(filePath) {
-        return fetch(filePath)
-            .then(response => response.text())
-            .then(text => text.split('\n').map(word => word.trim()).filter(word => word.length > 0))
-            .catch(error => {
-                console.error('Erro ao carregar o arquivo:', error);
-                return [];
-            });
-    }
-
-    function init() {
-        loadFileAsArray('biblioteca/palavras.txt').then(wordsArray => {
-            palavras = wordsArray;
-            getRandomWord();
-            setupEventListeners();
-        });
-    }
-
-    function setupEventListeners() {
-        const letras = document.querySelectorAll(".footer-teclado");
-        letras.forEach(letra => letra.addEventListener("click", handleLetterButtonClick));
-
-        document.addEventListener('keydown', (event) => {
-            const key = event.key;
-            if (key === 'Enter') {
-                verificarPalavra();
-            } else if (key.length === 1 && /[a-zA-Z]/.test(key)) {
-                insertLetter(key);
-            } else if (key === 'Backspace') {
-                btnBackspace();
-            }
-        });
-
-        document.addEventListener('focus', (event) => {
-            const focusedElement = document.activeElement;
-            const numberMatch = focusedElement.id.match(/input-(\d+)/);
-            if (numberMatch) {
-                currentInput = parseInt(numberMatch[1], 10);
-                console.log(currentInput);
-            }
-        }, true);
+    const setupEventListeners = () => {
+        document.querySelectorAll(".footer-teclado").forEach(tecla => tecla.addEventListener("click", handleLetterButtonClick));
+        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('focus', handleFocus, true);
 
         const backspace = document.querySelector(".div-backspace-button");
         if (backspace) backspace.addEventListener("click", btnBackspace);
 
-        const enterButton = document.getElementById('enter');
-        if (enterButton) enterButton.addEventListener('click', verificarPalavra);
+        addClickListener('enter', verificarPalavra);
+        addClickListener('btn-restart', resetarPagina);
+    };
 
-        const restartButton = document.getElementById('btn-restart');
-        if (restartButton) restartButton.addEventListener('click', resetarPagina);
-    }
+    const addClickListener = (id, handler) => {
+        const button = document.getElementById(id);
+        if (button) button.addEventListener('click', handler);
+    };
 
-    function getRandomWord() {
+    const handleKeyDown = (event) => {
+        const key = event.key;
+        if (key === 'Enter') {
+            verificarPalavra();
+        } else if (key.length === 1 && /[a-zA-Z]/.test(key)) {
+            insertLetter(key);
+        } else if (key === 'Backspace') {
+            btnBackspace();
+        }
+    };
+
+    const handleFocus = (event) => {
+        const idMatch = event.target.id.match(/input-(\d+)/);
+        if (idMatch) currentInput = parseInt(idMatch[1], 10);
+    };
+
+    const getRandomWord = () => {
         posicao = getRandomNumber(palavras.length);
-        console.log(palavras[posicao]);
-    }
+    };
 
-    function getRandomNumber(size) {
-        return Math.floor(Math.random() * size);
-    }
+    const getRandomNumber = (size) => Math.floor(Math.random() * size);
 
-    function insertLetter(letter) {
+    const insertLetter = (letter) => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
-        
         if (currentInput <= rowInputs.length) {
             rowInputs[currentInput - 1].value = letter;
             rowInputs[currentInput - 1].focus();
             currentInput = (currentInput % rowInputs.length) + 1;
         }
-    }
+    };
 
-    function handleLetterButtonClick(event) {
+    const handleLetterButtonClick = (event) => {
         insertLetter(event.target.textContent);
-    }
+    };
 
-    function btnBackspace() {
+    const btnBackspace = () => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
         currentInput = Math.max(currentInput - 1, 1);
-
         for (let i = rowInputs.length - 1; i >= 0; i--) {
             if (rowInputs[i].value !== "") {
                 rowInputs[i].value = "";
@@ -138,78 +113,70 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
         rowInputs[currentInput - 1].focus();
-    }
+    };
 
-    function removeAcentos(str) {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    }
+    const removeAccents = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    function alterarCoresInputs(resultado) {
+    const alterarCoresInputs = (resultado) => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
-    
         rowInputs.forEach((input, index) => {
             const status = resultado[index];
-            input.style.backgroundColor = {
-                "Correto": "#6AA84F",
-                "Incorreto": "#FFD966",
-                "Não está na palavra": "#434343"
+            const cor = {
+                "Correto": COLORS.CORRECT,
+                "Incorreto": COLORS.INCORRECT,
+                "Não está na palavra": COLORS.NOT_IN_WORD
             }[status] || "";
+            input.style.backgroundColor = cor;
             if (status !== "Correto") todasCorretas = false;
         });
+    };
 
-        if (todasCorretas) {
-            rowInputs.forEach(input => input.style.backgroundColor = "#6AA84F");
-        }
-    }
-
-    function ativarProximaLinha() {
+    const ativarProximaLinha = () => {
+        const currentInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
+        currentInputs.forEach(input => input.disabled = true);
         currentRow++;
         const nextInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
         nextInputs.forEach(input => input.disabled = false);
         currentInput = 1;
         document.getElementById(`main-input-${currentInput}`)?.focus();
-    }
+    };
 
-    function verificarPalavra() {
+    const verificarPalavra = () => {
         const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
-        let palavraDigitada = Array.from(rowInputs).map(input => input.value).join('');
+        const palavraDigitada = Array.from(rowInputs).map(input => input.value).join('');
 
         if (palavraDigitada.length !== 5) {
-            mostrarPalavraIncompleta();
-            return;
-        }
-    
-        const palavraSorteada = palavras[posicao];
-    
-        const palavraDigitadaSemAcentos = removeAcentos(palavraDigitada.toLowerCase());
-        const palavrasSemAcentos = palavras.map(palavra => removeAcentos(palavra.toLowerCase()));
-    
-        if (!palavrasSemAcentos.includes(palavraDigitadaSemAcentos)) {
-            mostrarPalavraNaoEncontrada();
+            showOverlay(overlays.palavraIncompletaOverlay);
             return;
         }
 
-        if (removeAcentos(palavraDigitada.toLowerCase()) === removeAcentos(palavraSorteada.toLowerCase())) {
-            console.log("Palavra correta!");
-            rowInputs.forEach(input => input.style.backgroundColor = "#6AA84F");
+        const palavraSorteada = palavras[posicao];
+        const palavraDigitadaSemAcentos = removeAccents(palavraDigitada.toLowerCase());
+        const palavrasSemAcentos = palavras.map(palavra => removeAccents(palavra.toLowerCase()));
+
+        if (!palavrasSemAcentos.includes(palavraDigitadaSemAcentos)) {
+            showOverlay(overlays.palavraNaoEncontradaOverlay);
+            return;
+        }
+
+        if (palavraDigitadaSemAcentos === removeAccents(palavraSorteada.toLowerCase())) {
+            rowInputs.forEach(input => input.style.backgroundColor = COLORS.CORRECT);
             adicionarLetrasUsadas(palavraDigitada);
             atualizarCoresTeclas(palavraDigitada, Array(5).fill("Correto"), palavraSorteada);
-            mostrarTelaVitoria();
+            showOverlay(overlays.vitoriaOverlay);
             return;
-        } else {
-            if (currentRow === 6) {
-                mostrarTelaDerrota(palavraSorteada);
-            }
+        } else if (currentRow === 6) {
+            mostrarTelaDerrota(palavraSorteada);
         }
-    
+
         const resultado = verificarResultado(palavraDigitada, palavraSorteada);
         alterarCoresInputs(resultado);
         adicionarLetrasUsadas(palavraDigitada);
         atualizarCoresTeclas(palavraDigitada, resultado, palavraSorteada);
         ativarProximaLinha();
-    }
+    };
 
-    function verificarResultado(palavraDigitada, palavraSorteada) {
+    const verificarResultado = (palavraDigitada, palavraSorteada) => {
         const resultado = Array(palavraDigitada.length).fill(null);
         const letraContagem = {};
 
@@ -236,31 +203,30 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         return resultado;
-    }
+    };
 
-    function adicionarLetrasUsadas(palavra) {
+    const adicionarLetrasUsadas = (palavra) => {
         for (let letra of palavra) {
             if (!letrasUsadas.includes(letra.toUpperCase()) && !letrasUsadas.includes(letra.toLowerCase())) {
                 letrasUsadas.push(letra);
             }
         }
-    }
+    };
 
-    function atualizarCoresTeclas(palavraDigitada, resultado, palavraSorteada) {
+    const atualizarCoresTeclas = (palavraDigitada, resultado, palavraSorteada) => {
         const teclas = document.querySelectorAll(".footer-teclado");
         const letrasCorretas = new Set();
-    
+
         for (let i = 0; i < palavraDigitada.length; i++) {
             const letraDigitada = palavraDigitada[i];
             const status = resultado[i];
-    
+
             teclas.forEach(tecla => {
                 const teclaTexto = tecla.textContent.toLowerCase();
                 if (!letrasCorretas.has(teclaTexto) && teclaTexto === letraDigitada.toLowerCase()) {
                     if (status === "Correto") {
                         tecla.classList.remove('incorreto', 'nao-na-palavra');
                         tecla.classList.add('correto');
-                        letrasCorretas.add(teclaTexto);
                     } else if (status === "Incorreto" && !tecla.classList.contains('correto')) {
                         tecla.classList.remove('nao-na-palavra');
                         tecla.classList.add('incorreto');
@@ -268,14 +234,15 @@ document.addEventListener("DOMContentLoaded", function() {
                         tecla.classList.remove('incorreto');
                         tecla.classList.add('nao-na-palavra');
                     }
+                    letrasCorretas.add(teclaTexto);
                 }
             });
         }
-    
+
         palavraSorteada.split('').forEach(letra => {
             const ocorrenciasDigitadas = palavraDigitada.split(letra).length - 1;
             const ocorrenciasSorteadas = palavraSorteada.split(letra).length - 1;
-    
+
             if (ocorrenciasDigitadas > ocorrenciasSorteadas) {
                 teclas.forEach(tecla => {
                     if (tecla.textContent.toLowerCase() === letra.toLowerCase() &&
@@ -287,63 +254,37 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             }
         });
-    }
+    };
 
-    function mostrarTelaVitoria() {
-        vitoriaOverlay.classList.add("show");
-        vitoriaOverlay.addEventListener("click", function() {
-            vitoriaOverlay.classList.remove("show");
-        });
-    }
-
-    function mostrarTelaDerrota(palavraCorreta) {
+    const mostrarTelaDerrota = (palavraCorreta) => {
         const derrotaOverlayContent = document.querySelector(".derrota-overlay-content");
         derrotaOverlayContent.innerHTML = `A palavra correta era: ${palavraCorreta}`;
-        derrotaOverlay.classList.add("show");
-    
-        derrotaOverlay.addEventListener("click", function() {
-            derrotaOverlay.classList.remove("show");
-        });
-    }
+        showOverlay(overlays.derrotaOverlay);
+    };
 
-    function mostrarPalavraNaoEncontrada() {
-        palavraNaoEncontradaOverlay.classList.add("show");
-        setTimeout(() => {
-            palavraNaoEncontradaOverlay.classList.remove("show");
-        }, 1500);
-    }
-    
-    function mostrarPalavraIncompleta() {
-        palavraIncompletaOverlay.classList.add("show");
-        setTimeout(() => {
-            palavraIncompletaOverlay.classList.remove("show");
-        }, 1500);
-    }
-
-    function resetarPagina() {
+    const resetarPagina = () => {
         currentRow = 1;
         currentInput = 1;
         todasCorretas = true;
         letrasUsadas = [];
 
-        const inputs = document.querySelectorAll('input[type="text"]');
-        inputs.forEach(input => {
+        document.querySelectorAll('input[type="text"]').forEach(input => {
             input.value = '';
             input.style.backgroundColor = '';
             input.disabled = true;
         });
 
-        const firstRowInputs = document.querySelectorAll('#row-1 .main-input');
-        firstRowInputs.forEach(input => input.disabled = false);
-        firstRowInputs[0].focus();
+        document.querySelectorAll('#row-1 .main-input').forEach((input, index) => {
+            input.disabled = false;
+            if (index === 0) input.focus();
+        });
 
-        const teclas = document.querySelectorAll(".footer-teclado");
-        teclas.forEach(tecla => {
+        document.querySelectorAll(".footer-teclado").forEach(tecla => {
             tecla.classList.remove('correto', 'incorreto', 'nao-na-palavra');
         });
 
         getRandomWord();
-    }
+    };
 
     init();
 });

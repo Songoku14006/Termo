@@ -9,54 +9,56 @@
     <script type="module" src="js/app.js" defer></script>        
 </head>
 <body class="body">
-    <regras id="regras" class="overlay">
-        <div class="overlay-content">
-            <h2 class="titulo-regras">Regras do Jogo</h2>
-            <div class="paragrafos">
-                <p>Objetivo: Descobrir a palavra em até 6 tentativas. A cada tentativa as peças irão lhe auxiliar, mostrando o quão perto você está da solução</p>
-                <div class="div-exemplo-tentativa-1">
-                    <input class="exemplo-tentativa-1" placeholder="P" disabled></input> <input class="letra-2-tentativa-1" placeholder="A" disabled></input> <input class="exemplo-tentativa-1" placeholder="R" disabled></input> <input class="exemplo-tentativa-1" placeholder="T" disabled></input> <input class="exemplo-tentativa-1" placeholder="O" disabled></input>
+    <div class="popups">
+        <regras id="regras" class="overlay">
+            <div class="overlay-content">
+                <h2 class="titulo-regras">Regras do Jogo</h2>
+                <div class="paragrafos">
+                    <p>Objetivo: Descobrir a palavra em até 6 tentativas. A cada tentativa as peças irão lhe auxiliar, mostrando o quão perto você está da solução</p>
+                    <div class="div-exemplo-tentativa-1">
+                        <input class="exemplo-tentativa-1" placeholder="P" disabled></input> <input class="letra-2-tentativa-1" placeholder="A" disabled></input> <input class="exemplo-tentativa-1" placeholder="R" disabled></input> <input class="exemplo-tentativa-1" placeholder="T" disabled></input> <input class="exemplo-tentativa-1" placeholder="O" disabled></input>
+                    </div>
+                    <div class="texto-tentativa-1">
+                        <p>A letra</p><input class="letra-tentativa-1" placeholder="A" disabled></input><p>existe na palavra e está na posição correta</p>
+                    </div>
+                    <div class="div-exemplo-tentativa-2">
+                        <input class="exemplo-tentativa-2" placeholder="F" disabled></input> <input class="exemplo-tentativa-1" placeholder="I" disabled></input> <input class="exemplo-tentativa-1" placeholder="T" disabled></input> <input class="exemplo-tentativa-1" placeholder="A" disabled></input> <input class="letra-2-tentativa-2" placeholder="S" disabled></input>
+                    </div>
+                    <div class="texto-tentativa-2">
+                        <p>A letra</p><input class="letra-tentativa-2" placeholder="S" disabled></input><p>existe na palavra mas não está na posição correta</p>
+                    </div>
+                    <div class="div-exemplo-tentativa-3">
+                        <input class="exemplo-tentativa-3" placeholder="P" disabled></input> <input class="exemplo-tentativa-3" placeholder="U" disabled></input> <input class="exemplo-tentativa-3" placeholder="L" disabled></input> <input class="letra-2-tentativa-3" placeholder="G" disabled></input> <input class="exemplo-tentativa-3" placeholder="A" disabled></input>
+                    </div>
+                    <div class="texto-tentativa-3">
+                        <p>A letra</p><input class="letra-tentativa-3" placeholder="G" disabled></input><p> não existe na palavra</p>
+                    </div>
+                    <p>Os acentos não são considerados</p>
+                    <p>As palavras podem ter letras repetidas</p>
                 </div>
-                <div class="texto-tentativa-1">
-                    <p>A letra</p><input class="letra-tentativa-1" placeholder="A" disabled></input><p>existe na palavra e está na posição correta</p>
-                </div>
-                <div class="div-exemplo-tentativa-2">
-                    <input class="exemplo-tentativa-2" placeholder="F" disabled></input> <input class="exemplo-tentativa-1" placeholder="I" disabled></input> <input class="exemplo-tentativa-1" placeholder="T" disabled></input> <input class="exemplo-tentativa-1" placeholder="A" disabled></input> <input class="letra-2-tentativa-2" placeholder="S" disabled></input>
-                </div>
-                <div class="texto-tentativa-2">
-                    <p>A letra</p><input class="letra-tentativa-2" placeholder="S" disabled></input><p>existe na palavra mas não está na posição correta</p>
-                </div>
-                <div class="div-exemplo-tentativa-3">
-                    <input class="exemplo-tentativa-3" placeholder="P" disabled></input> <input class="exemplo-tentativa-3" placeholder="U" disabled></input> <input class="exemplo-tentativa-3" placeholder="L" disabled></input> <input class="letra-2-tentativa-3" placeholder="G" disabled></input> <input class="exemplo-tentativa-3" placeholder="A" disabled></input>
-                </div>
-                <div class="texto-tentativa-3">
-                    <p>A letra</p><input class="letra-tentativa-3" placeholder="G" disabled></input><p> não existe na palavra</p>
-                </div>
-                <p>Os acentos não são considerados</p>
-                <p>As palavras podem ter letras repetidas</p>
+            </div>
+        </regras>
+
+        <div id="vitoria" class="vitoria-overlay">
+            <div class="vitoria-overlay-content">
+                <h2 class="titulo-vitoria">Você Venceu!</h2>
+                <p class="texto-vitoria">Parabéns, você acertou a palavra!</p>
             </div>
         </div>
-    </regras>
 
-    <div id="vitoria" class="vitoria-overlay">
-        <div class="vitoria-overlay-content">
-            <h2 class="titulo-vitoria">Você Venceu!</h2>
-            <p class="texto-vitoria">Parabéns, você acertou a palavra!</p>
+        <div id="derrota" class="derrota-overlay">
+            <div class="derrota-overlay-content">
+                <h2 class="titulo-derrota">Você Perdeu!</h2>
+                <p class="texto-derrota">Infelizmente, você não acertou a palavra.</p>
+            </div>
         </div>
-    </div>
 
-    <div id="derrota" class="derrota-overlay">
-        <div class="derrota-overlay-content">
-            <h2 class="titulo-derrota">Você Perdeu!</h2>
-            <p class="texto-derrota">Infelizmente, você não acertou a palavra.</p>
+        <div id="palavraNaoEncontrada" class="aviso-overlay">
+            <div class="aviso-overlay-content">Palavra não encontrada na lista de palavras.</div>
         </div>
-    </div>
-
-    <div id="palavraNaoEncontrada" class="aviso-overlay">
-        <div class="aviso-overlay-content">Palavra não encontrada na lista de palavras.</div>
-    </div>
-    <div id="palavraIncompleta" class="aviso-overlay">
-        <div class="aviso-overlay-content">Digite todas as letras para verificar.</div>
+        <div id="palavraIncompleta" class="aviso-overlay">
+            <div class="aviso-overlay-content">Digite todas as letras para verificar.</div>
+        </div>
     </div>
 
     <header class="header">
@@ -66,46 +68,46 @@
     </header>
     <main class="main">
         <div class="row" id="row-1">
-            <input class="main-input" id="row-1-input-1" type="text" autocomplete="off" maxlength="1">
-            <input class="main-input" id="row-1-input-2" type="text" autocomplete="off" maxlength="1">
-            <input class="main-input" id="row-1-input-3" type="text" autocomplete="off" maxlength="1">
-            <input class="main-input" id="row-1-input-4" type="text" autocomplete="off" maxlength="1">
-            <input class="main-input" id="row-1-input-5" type="text" autocomplete="off" maxlength="1">
+            <input class="main-input" id="row-1-input-1" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true">
+            <input class="main-input" id="row-1-input-2" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true">
+            <input class="main-input" id="row-1-input-3" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true">
+            <input class="main-input" id="row-1-input-4" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true">
+            <input class="main-input" id="row-1-input-5" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true">
         </div>
         <div class="row" id="row-2">
-            <input class="main-input" id="row-2-input-1" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-2-input-2" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-2-input-3" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-2-input-4" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-2-input-5" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="row-2-input-1" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-2-input-2" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-2-input-3" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-2-input-4" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-2-input-5" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
         </div>
         <div class="row" id="row-3">
-            <input class="main-input" id="row-3-input-1" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-3-input-2" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-3-input-3" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-3-input-4" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-3-input-5" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="row-3-input-1" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-3-input-2" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-3-input-3" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-3-input-4" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-3-input-5" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
         </div>
         <div class="row" id="row-4">
-            <input class="main-input" id="row-4-input-1" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-4-input-2" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-4-input-3" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-4-input-4" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-4-input-5" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="row-4-input-1" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-4-input-2" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-4-input-3" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-4-input-4" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-4-input-5" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
         </div>
         <div class="row" id="row-5">
-            <input class="main-input" id="row-5-input-1" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-5-input-2" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-5-input-3" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-5-input-4" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-5-input-5" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="row-5-input-1" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-5-input-2" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-5-input-3" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-5-input-4" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-5-input-5" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
         </div>
         <div class="row" id="row-6">
-            <input class="main-input" id="row-6-input-1" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-6-input-2" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-6-input-3" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-6-input-4" type="text" autocomplete="off" maxlength="1" disabled>
-            <input class="main-input" id="row-6-input-5" type="text" autocomplete="off" maxlength="1" disabled>
+            <input class="main-input" id="row-6-input-1" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-6-input-2" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-6-input-3" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-6-input-4" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
+            <input class="main-input" id="row-6-input-5" type="text" autocomplete="off" maxlength="1" inputmode="none" contenteditable="true" disabled>
         </div>
     </main>
     <footer class="footer">
