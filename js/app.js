@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const setupEventListeners = () => {
         document.querySelectorAll(".footer-teclado").forEach(tecla => tecla.addEventListener("click", handleLetterButtonClick));
-        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keydown', handleKeyDown, { passive: true });
         document.addEventListener('focus', handleFocus, true);
 
         const backspace = document.querySelector(".div-backspace-button");
