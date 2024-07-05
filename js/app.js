@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         tecla.classList.add('incorreto');
                     } else if (status === "Não está na palavra" && !tecla.classList.contains('correto')) {
                         tecla.classList.remove('incorreto');
-                        tecla.classList.add('nao-na-palavra');
+                        tecla.classList.add('correto');
                     }
                     letrasCorretas.add(teclaTexto);
                 }
