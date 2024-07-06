@@ -51,12 +51,18 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const setupEventListeners = () => {
-        document.querySelectorAll(".footer-teclado").forEach(tecla => tecla.addEventListener("click", handleLetterButtonClick));
+        document.querySelectorAll(".footer-teclado").forEach(tecla => {
+            tecla.addEventListener("click", handleLetterButtonClick);
+            tecla.addEventListener("touchstart", handleLetterButtonClick);
+        });
         document.addEventListener('keydown', handleKeyDown, { passive: true });
         document.addEventListener('focus', handleFocus, true);
 
         const backspace = document.querySelector(".div-backspace-button");
-        if (backspace) backspace.addEventListener("click", btnBackspace);
+        if (backspace) {
+            backspace.addEventListener("click", btnBackspace);
+            backspace.addEventListener("touchstart", btnBackspace);
+        }
 
         addClickListener('enter', verificarPalavra);
         addClickListener('btn-restart', resetarPagina);
@@ -64,7 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const addClickListener = (id, handler) => {
         const button = document.getElementById(id);
-        if (button) button.addEventListener('click', handler);
+        if (button) {
+            button.addEventListener('click', handler);
+            button.addEventListener('touchstart', handler);
+        }
     };
 
     const handleKeyDown = (event) => {
