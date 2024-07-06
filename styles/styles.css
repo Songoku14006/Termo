@@ -58,27 +58,27 @@
 }
 
 .derrota-overlay-content  {
-    font-size: 2.5rem;
+    font-size: 3vw;
     font-family: 'Libre Baskerville', sans-serif;
 }
 
 .titulo-vitoria {
-    font-size: 3.5rem;
+    font-size: 3vw;
     font-family: 'Libre Baskerville', sans-serif;
 }
 
 .texto-vitoria {
-    font-size: 2rem;
+    font-size: 3vw;
     font-family: 'Libre Baskerville', sans-serif;
 }
 
 .titulo-derrota {
-    font-size: 5rem;
+    font-size: 3vw;
     font-family: 'Libre Baskerville', sans-serif;
 }
 
 .texto-derrota {
-    font-size: 2rem;
+    font-size: 3vw;
     font-family: 'Libre Baskerville', sans-serif;
 }
 
@@ -112,7 +112,7 @@
     margin-right: 18.5%;
     color: #F4FDFF;
     font-family: 'Libre Baskerville', sans-serif;
-    font-size: 1.75rem;
+    font-size: 4vw;
 
 }
 
@@ -394,8 +394,8 @@
 }
 
 .main-input {
-    width: 5vw;
-    height: 5vw;
+    width: 8vh;
+    height: 8vh;
     color: #F4FDFF;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
@@ -428,7 +428,7 @@
     height: 8vh;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
-    font-size: 3vh;
+    font-size: 4vh;
     background-color: #6099B6;
     color:azure;
     border-radius: 10%;
@@ -461,8 +461,8 @@
 }
 
 .div-backspace-image {
-    width: 5vw;
-    height: 4.5vw;
+    width: auto;
+    height: 2vh;
     justify-content: center;
 }
 
@@ -484,13 +484,13 @@
 }
 
 .div-enter-button {
-    width: 10vh;
+    width: auto;
     height: 8vh;
     align-items: center;
     justify-content: center;
     font-family: 'Libre Baskerville', sans-serif;
     text-align: center;
-    font-size: 3vh;
+    font-size: 4vh;
     background-color: #6099B6;
     cursor: pointer;
     border-radius: 8%; 
@@ -501,21 +501,30 @@
 @media only screen and (max-width: 470px) {
   
   .header-titulo {
-    font-size: 10vw;
+    font-size: 14vw;
   }
 
   .header-botao-regras, .header-botao-restart {
     width: 8vw;
     height: 8vw;
   }
-
+  
   .header-img-restart, .header-imagem-regras {
     width: 6vw;
     height: 6vw;
   }
 
   .main-input {
-    width: 10vw;
-    height: 10vw;
+    width: 16vw;
+    height: 16vw;
+  }
+
+  .footer-teclado {
+    width: 8.5vw;
+    height: 8vh;
+    font-size: 6vw;
+  }
+  .div-enter-button {
+    font-size: 8vw;
   }
 }
