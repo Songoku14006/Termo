@@ -1,11 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let currentRow = 1;
-    let currentInput = 1;
-    let palavras = [];
-    let posicao;
-    let todasCorretas = true;
-    let letrasUsadas = [];
-
     const COLORS = {
         CORRECT: "#6AA84F",
         INCORRECT: "#FFD966",
@@ -44,26 +37,35 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    const init = async () => {
-        palavras = await loadFileAsArray('biblioteca/palavras.txt');
-        getRandomWord();
-        setupEventListeners();
+    const initGame = async () => {
+        const state = {
+            currentRow: 1,
+            currentInput: 1,
+            palavras: [],
+            todasCorretas: true,
+            letrasUsadas: [],
+            posicao: null,
+        };
+
+        state.palavras = await loadFileAsArray('biblioteca/palavras.txt');
+        getRandomWord(state);
+        setupEventListeners(state);
     };
 
-    const setupEventListeners = () => {
+    const setupEventListeners = (state) => {
         document.querySelectorAll(".footer-teclado").forEach(tecla => {
-            tecla.addEventListener("click", handleLetterButtonClick);
+            tecla.addEventListener("click", () => handleLetterButtonClick(tecla.textContent.toLowerCase(), state));
         });
-        document.addEventListener('keydown', handleKeyDown, { passive: true });
-        document.addEventListener('focus', handleFocus, true);
+        document.addEventListener('keydown', (event) => handleKeyDown(event, state), { passive: true });
+        document.addEventListener('focus', (event) => handleFocus(event, state), true);
 
         const backspace = document.querySelector(".div-backspace-button");
         if (backspace) {
-            backspace.addEventListener("click", btnBackspace);
+            backspace.addEventListener("click", () => btnBackspace(state));
         }
 
-        addClickListener('enter', verificarPalavra);
-        addClickListener('btn-restart', resetarPagina);
+        addClickListener('enter', () => verificarPalavra(state));
+        addClickListener('btn-restart', () => resetarPagina(state));
     };
 
     const addClickListener = (id, handler) => {
@@ -73,61 +75,61 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event, state) => {
         const key = event.key;
         if (key === 'Enter') {
-            verificarPalavra();
+            verificarPalavra(state);
         } else if (key.length === 1 && /[a-zA-Z]/.test(key)) {
-            insertLetter(key);
+            insertLetter(key, state);
         } else if (key === 'Backspace') {
-            btnBackspace();
+            btnBackspace(state);
         }
     };
 
-    const handleFocus = (event) => {
+    const handleFocus = (event, state) => {
         const idMatch = event.target.id.match(/input-(\d+)/);
-        if (idMatch) currentInput = parseInt(idMatch[1], 10);
+        if (idMatch) state.currentInput = parseInt(idMatch[1], 10);
     };
 
-    const getRandomWord = () => {
-        posicao = getRandomNumber(palavras.length);
+    const getRandomWord = (state) => {
+        state.posicao = getRandomNumber(state.palavras.length);
     };
 
     const getRandomNumber = (size) => Math.floor(Math.random() * size);
 
-    const insertLetter = (letter) => {
-        const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
-        if (currentInput <= rowInputs.length) {
-            rowInputs[currentInput - 1].value = letter;
-            rowInputs[currentInput - 1].focus();
-            currentInput = (currentInput % rowInputs.length) + 1;
-            if (currentInput > rowInputs.length) {
-                verificarPalavra();
+    const insertLetter = (letter, state) => {
+        const rowInputs = document.querySelectorAll(`#row-${state.currentRow} .main-input`);
+        if (state.currentInput <= rowInputs.length) {
+            rowInputs[state.currentInput - 1].value = letter;
+            rowInputs[state.currentInput - 1].focus();
+            state.currentInput = (state.currentInput % rowInputs.length) + 1;
+            if (state.currentInput > rowInputs.length) {
+                verificarPalavra(state);
             }
         }
     };
 
-    const handleLetterButtonClick = (event) => {
-        insertLetter(event.target.textContent);
+    const handleLetterButtonClick = (letter, state) => {
+        insertLetter(letter, state);
     };
 
-    const btnBackspace = () => {
-        const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
-        currentInput = Math.max(currentInput - 1, 1);
+    const btnBackspace = (state) => {
+        const rowInputs = document.querySelectorAll(`#row-${state.currentRow} .main-input`);
+        state.currentInput = Math.max(state.currentInput - 1, 1);
         for (let i = rowInputs.length - 1; i >= 0; i--) {
             if (rowInputs[i].value !== "") {
                 rowInputs[i].value = "";
-                currentInput = i + 1;
+                state.currentInput = i + 1;
                 break;
             }
         }
-        rowInputs[currentInput - 1].focus();
+        rowInputs[state.currentInput - 1].focus();
     };
 
     const removeAccents = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    const alterarCoresInputs = (resultado) => {
-        const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
+    const alterarCoresInputs = (resultado, state) => {
+        const rowInputs = document.querySelectorAll(`#row-${state.currentRow} .main-input`);
         rowInputs.forEach((input, index) => {
             const status = resultado[index];
             const cor = {
@@ -136,22 +138,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Não está na palavra": COLORS.NOT_IN_WORD
             }[status] || "";
             input.style.backgroundColor = cor;
-            if (status !== "Correto") todasCorretas = false;
+            if (status !== "Correto") state.todasCorretas = false;
         });
     };
 
-    const ativarProximaLinha = () => {
-        const currentInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
+    const ativarProximaLinha = (state) => {
+        const currentInputs = document.querySelectorAll(`#row-${state.currentRow} .main-input`);
         currentInputs.forEach(input => input.disabled = true);
-        currentRow++;
-        const nextInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
+        state.currentRow++;
+        const nextInputs = document.querySelectorAll(`#row-${state.currentRow} .main-input`);
         nextInputs.forEach(input => input.disabled = false);
-        currentInput = 1;
-        document.getElementById(`main-input-${currentInput}`)?.focus();
+        state.currentInput = 1;
+        document.getElementById(`main-input-${state.currentInput}`)?.focus();
     };
 
-    const verificarPalavra = () => {
-        const rowInputs = document.querySelectorAll(`#row-${currentRow} .main-input`);
+    const verificarPalavra = (state) => {
+        const rowInputs = document.querySelectorAll(`#row-${state.currentRow} .main-input`);
         const palavraDigitada = Array.from(rowInputs).map(input => input.value).join('');
 
         if (palavraDigitada.length !== 5) {
@@ -159,9 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const palavraSorteada = palavras[posicao];
+        const palavraSorteada = state.palavras[state.posicao];
         const palavraDigitadaSemAcentos = removeAccents(palavraDigitada.toLowerCase());
-        const palavrasSemAcentos = palavras.map(palavra => removeAccents(palavra.toLowerCase()));
+        const palavrasSemAcentos = state.palavras.map(palavra => removeAccents(palavra.toLowerCase()));
 
         if (!palavrasSemAcentos.includes(palavraDigitadaSemAcentos)) {
             showOverlay(overlays.palavraNaoEncontradaOverlay);
@@ -170,29 +172,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (palavraDigitadaSemAcentos === removeAccents(palavraSorteada.toLowerCase())) {
             rowInputs.forEach(input => input.style.backgroundColor = COLORS.CORRECT);
-            adicionarLetrasUsadas(palavraDigitada);
+            adicionarLetrasUsadas(palavraDigitada, state);
             atualizarCoresTeclas(palavraDigitada, Array(5).fill("Correto"), palavraSorteada);
             showOverlay(overlays.vitoriaOverlay);
             return;
-        } else if (currentRow === 6) {
+        } else if (state.currentRow === 6) {
             mostrarTelaDerrota(palavraSorteada);
         }
 
         const resultado = verificarResultado(palavraDigitada, palavraSorteada);
-        alterarCoresInputs(resultado);
-        adicionarLetrasUsadas(palavraDigitada);
+        alterarCoresInputs(resultado, state);
+        adicionarLetrasUsadas(palavraDigitada, state);
         atualizarCoresTeclas(palavraDigitada, resultado, palavraSorteada);
-        ativarProximaLinha();
+        ativarProximaLinha(state);
     };
 
     const verificarResultado = (palavraDigitada, palavraSorteada) => {
         if (palavraDigitada.length !== palavraSorteada.length) {
             return [];
         }
-    
+
         const resultado = Array(palavraDigitada.length).fill(null);
         const letraContagem = {};
-    
+
         for (let letra of palavraSorteada) {
             letraContagem[letra] = (letraContagem[letra] || 0) + 1;
         }
@@ -203,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 letraContagem[palavraDigitada[i]]--;
             }
         }
-    
+
         for (let i = 0; i < palavraDigitada.length; i++) {
             if (resultado[i] === null) {
                 if (letraContagem[palavraDigitada[i]] > 0) {
@@ -214,16 +216,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
-    
-        console.log("Resultado final:", resultado);
-    
         return resultado;
     };
 
-    const adicionarLetrasUsadas = (palavra) => {
+    const adicionarLetrasUsadas = (palavra, state) => {
         for (let letra of palavra) {
-            if (!letrasUsadas.includes(letra.toUpperCase()) && !letrasUsadas.includes(letra.toLowerCase())) {
-                letrasUsadas.push(letra);
+            if (!state.letrasUsadas.includes(letra.toUpperCase()) && !state.letrasUsadas.includes(letra.toLowerCase())) {
+                state.letrasUsadas.push(letra);
             }
         }
     };
@@ -277,11 +276,11 @@ document.addEventListener("DOMContentLoaded", () => {
         showOverlay(overlays.derrotaOverlay);
     };
 
-    const resetarPagina = () => {
-        currentRow = 1;
-        currentInput = 1;
-        todasCorretas = true;
-        letrasUsadas = [];
+    const resetarPagina = (state) => {
+        state.currentRow = 1;
+        state.currentInput = 1;
+        state.todasCorretas = true;
+        state.letrasUsadas = [];
 
         document.querySelectorAll('input[type="text"]').forEach(input => {
             input.value = '';
@@ -298,8 +297,8 @@ document.addEventListener("DOMContentLoaded", () => {
             tecla.classList.remove('correto', 'incorreto', 'nao-na-palavra');
         });
 
-        getRandomWord();
+        getRandomWord(state);
     };
 
-    init();
+    initGame();
 });
