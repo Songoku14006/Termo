@@ -101,6 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
             rowInputs[currentInput - 1].value = letter;
             rowInputs[currentInput - 1].focus();
             currentInput = (currentInput % rowInputs.length) + 1;
+            if (currentInput > rowInputs.length) {
+                verificarPalavra();
+            }
         }
     };
 
