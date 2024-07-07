@@ -1,16 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const COLORS = {
-        CORRECT: "#6AA84F",
-        INCORRECT: "#FFD966",
-        NOT_IN_WORD: "#434343"
-    };
+    let checkbox = document.getElementById('modo-daltonico');
+    let COLORS;
+    if (checkbox.checked) {
+        COLORS = {
+            CORRECT: "#008000",
+            INCORRECT: "#FFA500",
+            NOT_IN_WORD: "#808080"
+        };
+    } else {
+        COLORS = {
+            CORRECT: "#6AA84F",
+            INCORRECT: "#FFD966",
+            NOT_IN_WORD: "#434343"
+        };
+    }
 
     const overlays = {
         regrasOverlay: document.getElementById("regras"),
         vitoriaOverlay: document.getElementById("vitoria"),
         derrotaOverlay: document.getElementById("derrota"),
         palavraNaoEncontradaOverlay: document.getElementById("palavraNaoEncontrada"),
-        palavraIncompletaOverlay: document.getElementById("palavraIncompleta")
+        palavraIncompletaOverlay: document.getElementById("palavraIncompleta"),
+        configuracoesOverlay: document.getElementById("configuracoes"),
+        estatisticasOverlay: document.getElementById("estatisticas")
     };
 
     overlays.regrasOverlay.classList.add("show");
@@ -20,6 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("btn-rules").addEventListener("click", () => overlays.regrasOverlay.classList.add("show"));
+
+    document.getElementById("btn-configuracoes").addEventListener("click", () => overlays.configuracoesOverlay.classList.add("show"));
+    document.getElementById("btn-estatisticas").addEventListener("click", () => overlays.estatisticasOverlay.classList.add("show"));
 
     const showOverlay = (overlay) => {
         overlay.classList.add("show");
@@ -36,6 +51,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return [];
         }
     };
+
+    const updateWinStrikeDisplay = (count) => {
+        document.getElementById('win-strike').textContent = `Vitórias seguidas: ${count}`;
+    };
+
+    const updateEstatisticasDisplay = (vitoria, derrota) => {
+        document.getElementById('win-count').textContent = `Vitórias: ${vitoria}`;
+        document.getElementById('loss-count').textContent = `Derrotas: ${derrota}`;
+    };
+
+    let winStrike = localStorage.getItem('winStrike') ? parseInt(localStorage.getItem('winStrike')) : 0;
+    let vitorias = localStorage.getItem('vitorias') ? parseInt(localStorage.getItem('vitorias')) : 0;
+    let derrotas = localStorage.getItem('derrotas') ? parseInt(localStorage.getItem('derrotas')) : 0;
 
     const initGame = async () => {
         const state = {
@@ -79,12 +107,33 @@ document.addEventListener("DOMContentLoaded", () => {
         const key = event.key;
         if (key === 'Enter') {
             verificarPalavra(state);
+        } else if (key === 'ArrowRight') {
+            navegarParaDireita(state);
+        } else if (key === 'ArrowLeft') {
+            navegarParaEsquerda(state);
         } else if (key.length === 1 && /[a-zA-Z]/.test(key)) {
             insertLetter(key, state);
         } else if (key === 'Backspace') {
             btnBackspace(state);
         }
     };
+    
+    const navegarParaDireita = (state) => {
+        const rowInputs = document.querySelectorAll(`#row-${state.currentRow} .main-input`);
+        const currentIndex = (state.currentInput - 1) % rowInputs.length;
+        const nextIndex = (currentIndex + 1) % rowInputs.length;
+        rowInputs[nextIndex].focus();
+        state.currentInput = nextIndex + 1;
+    };
+    
+    const navegarParaEsquerda = (state) => {
+        const rowInputs = document.querySelectorAll(`#row-${state.currentRow} .main-input`);
+        const currentIndex = (state.currentInput - 1) % rowInputs.length;
+        const previousIndex = (currentIndex - 1 + rowInputs.length) % rowInputs.length;
+        rowInputs[previousIndex].focus();
+        state.currentInput = previousIndex + 1;
+    };
+    
 
     const handleFocus = (event, state) => {
         const idMatch = event.target.id.match(/input-(\d+)/);
@@ -99,33 +148,77 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const insertLetter = (letter, state) => {
         const rowInputs = document.querySelectorAll(`#row-${state.currentRow} .main-input`);
-        if (state.currentInput <= rowInputs.length) {
-            rowInputs[state.currentInput - 1].value = letter;
-            rowInputs[state.currentInput - 1].focus();
+        
+        // Encontra o índice do input atual focado
+        const currentIndex = (state.currentInput - 1) % rowInputs.length;
+        const currentInput = rowInputs[currentIndex];
+        
+        // Verifica se o input atual já está preenchido
+        if (!currentInput.value) {
+            // Se não estiver preenchido, insere a letra no input atual
+            currentInput.value = letter;
+            currentInput.focus();
             state.currentInput = (state.currentInput % rowInputs.length) + 1;
-            if (state.currentInput > rowInputs.length) {
-                verificarPalavra(state);
+            
+            // Verifica se todos os inputs estão preenchidos
+            const allInputsFilled = Array.from(rowInputs).every(input => input.value !== "");
+            if (allInputsFilled) {
+                // Remove o foco de todos os inputs
+                rowInputs.forEach(input => input.blur());
+            }
+        } else {
+            // Se o input atual já está preenchido, tenta encontrar o próximo input vazio
+            let nextIndex = (currentIndex + 1) % rowInputs.length;
+            while (nextIndex !== currentIndex && rowInputs[nextIndex].value) {
+                nextIndex = (nextIndex + 1) % rowInputs.length;
+            }
+            
+            // Insere a letra no próximo input vazio encontrado
+            if (!rowInputs[nextIndex].value) {
+                rowInputs[nextIndex].value = letter;
+                rowInputs[nextIndex].focus();
+                state.currentInput = nextIndex + 1;
             }
         }
     };
-
+       
+    
     const handleLetterButtonClick = (letter, state) => {
         insertLetter(letter, state);
     };
 
     const btnBackspace = (state) => {
         const rowInputs = document.querySelectorAll(`#row-${state.currentRow} .main-input`);
-        state.currentInput = Math.max(state.currentInput - 1, 1);
-        for (let i = rowInputs.length - 1; i >= 0; i--) {
-            if (rowInputs[i].value !== "") {
-                rowInputs[i].value = "";
-                state.currentInput = i + 1;
-                break;
+        
+        // Verifica se algum input está em foco
+        const focusedInput = document.activeElement;
+        const focusedIndex = Array.from(rowInputs).findIndex(input => input === focusedInput);
+    
+        if (focusedIndex === -1) {
+            // Se nenhum input estiver em foco, foca no último e apaga
+            const lastInput = rowInputs[rowInputs.length - 1];
+            lastInput.value = "";
+            lastInput.focus();
+            state.currentInput = rowInputs.length;
+        } else {
+            // Se algum input está em foco
+            if (focusedInput.value !== "") {
+                // Se o input focado estiver preenchido, apaga ele e foca nele
+                focusedInput.value = "";
+                focusedInput.focus();
+            } else {
+                // Se o input focado não estiver preenchido, volta para o anterior e apaga
+                const previousIndex = Math.max(focusedIndex - 1, 0);
+                const previousInput = rowInputs[previousIndex];
+                previousInput.value = "";
+                previousInput.focus();
+                state.currentInput = previousIndex + 1;
             }
         }
-        rowInputs[state.currentInput - 1].focus();
     };
-
+    
+    
+    
     const removeAccents = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
     const alterarCoresInputs = (resultado, state) => {
@@ -174,10 +267,23 @@ document.addEventListener("DOMContentLoaded", () => {
             rowInputs.forEach(input => input.style.backgroundColor = COLORS.CORRECT);
             adicionarLetrasUsadas(palavraDigitada, state);
             atualizarCoresTeclas(palavraDigitada, Array(5).fill("Correto"), palavraSorteada);
+            winStrike++;
+            localStorage.setItem('winStrike', winStrike);
+            updateWinStrikeDisplay(winStrike);
+            document.querySelector("#vitoria .vitoria-overlay-content #win-strike").textContent = `Vitórias seguidas: ${winStrike}`;
+            vitorias++;
+            localStorage.setItem('vitorias', vitorias);
+            updateEstatisticasDisplay(vitorias,derrotas);
             showOverlay(overlays.vitoriaOverlay);
             return;
         } else if (state.currentRow === 6) {
             mostrarTelaDerrota(palavraSorteada);
+            winStrike = 0;
+            localStorage.setItem('winStrike', winStrike);
+            derrotas++;
+            localStorage.setItem('derrotas', derrotas);
+            updateEstatisticasDisplay(vitorias,derrotas);
+            return;
         }
 
         const resultado = verificarResultado(palavraDigitada, palavraSorteada);

@@ -43,6 +43,7 @@
             <div class="vitoria-overlay-content">
                 <h2 class="titulo-vitoria">Você Venceu!</h2>
                 <p class="texto-vitoria">Parabéns, você acertou a palavra!</p>
+                <p id="win-strike" class="texto-vitoria">Vitórias seguidas: 0</p>
             </div>
         </div>
 
@@ -50,6 +51,27 @@
             <div class="derrota-overlay-content">
                 <h2 class="titulo-derrota">Você Perdeu!</h2>
                 <p class="texto-derrota">Infelizmente, você não acertou a palavra.</p>
+            </div>
+        </div>
+
+        <div id="configuracoes" class="configuracoes-overlay">
+            <div class="configuracoes-overlay-content">
+                <p class="texto-auto-contraste">Modo alto contraste</p>
+                <label class="switch">
+                    <input id="modo-daltonico" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+
+        
+        <div id="estatisticas" class="estatisticas-overlay">
+            <div class="estatisticas-overlay-content">
+                <p class="titulo-estatisticas">Estatísticas</p>
+                <div class="paragrafos-estatisticas">
+                    <p id="win-count">Vitórias: 0</p>
+                    <p id="loss-count">Derrotas: 0</p>
+                </div>
             </div>
         </div>
 
@@ -62,9 +84,15 @@
     </div>
 
     <header class="header">
-        <button id="btn-rules" class="header-botao-regras"><img class="header-imagem-regras" src="assets/regras.png" alt="Regras"></button>
+        <div class="div-botoes1">
+            <button id="btn-estatisticas" class="header-botao-estatisticas"><img class="header-img-estatisticas" src="assets/grafico.png" alt="Estatísticas"></button>
+            <button id="btn-rules" class="header-botao-regras"><img class="header-imagem-regras" src="assets/regras.png" alt="Regras"></button>
+        </div>
         <h1 class="header-titulo">Termo</h1>
-        <button id="btn-restart" class="header-botao-restart"><img class="header-img-restart" src="assets/Restart.png" alt="Estatísticas"></button>
+        <div class="div-botoes2">
+            <button id="btn-restart" class="header-botao-restart"><img class="header-img-restart" src="assets/Restart.png" alt="restart"></button>
+            <button id="btn-configuracoes" class="header-botao-configuracoes"><img class="header-img-configuracoes" src="assets/Engrenagem.png" alt="Configurações"></button>
+        </div>
     </header>
     <main class="main">
         <div class="row" id="row-1">
