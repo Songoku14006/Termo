@@ -504,6 +504,25 @@
 
 @media only screen and (max-width: 470px) {
   
+  .overlay-content {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
+  .titulo-regras {
+    font-size: 5vw;
+  }
+
+  .paragrafos {
+    font-size: 2.5vw;
+  }
+
+  .letra-tentativa-1, .letra-tentativa-2, .letra-tentativa-3, .exemplo-tentativa-1, .exemplo-tentativa-2, .exemplo-tentativa-3, .letra-2-tentativa-1, .letra-2-tentativa-2, .letra-2-tentativa-3 {
+    width: 6vw;
+    height: 6vw;
+    font-size: 4vw;
+  }
+
   .header-titulo {
     font-size: 14vw;
   }
@@ -524,7 +543,7 @@
   }
 
   .footer-teclado {
-    width: 8.5vw;
+    width: 8vw;
     height: 8vh;
     font-size: 6vw;
   }
