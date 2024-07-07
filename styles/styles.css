@@ -538,14 +538,14 @@
   }
 
   .main-input {
-    width: 16vw;
-    height: 16vw;
+    width: 14vw;
+    height: 14vw;
   }
 
   .footer-teclado {
     width: 8vw;
     height: 8vh;
-    font-size: 6vw;
+    font-size: 5.5vw;
   }
   .div-enter-button {
     font-size: 8vw;
